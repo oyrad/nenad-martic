@@ -1,11 +1,13 @@
 "use client";
 
 import { FacebookLogo, InstagramLogo } from "@phosphor-icons/react";
+import Title from "../_components/Title";
 
 export default function Contact() {
   return (
-    <section className="flex flex-col gap-2 text-center pt-6">
-      <div className="flex justify-center gap-2">
+    <section className="flex flex-col gap-2 px-4">
+      <Title text="Contact" />
+      <div className="flex gap-2">
         <InstagramLogo size={32} />
         <FacebookLogo size={32} />
       </div>

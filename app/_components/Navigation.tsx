@@ -6,39 +6,43 @@ import { List, X } from "@phosphor-icons/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import NavigationItem from "./NavigationItem";
 
 export default function Navigation() {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const pathname = usePathname();
 
-  console.log(isNavigationOpen);
+  function handleNavigationClose() {
+    setTimeout(() => setIsNavigationOpen(false), 100);
+  }
+
   return (
-    <nav className="fixed w-full">
+    <header className="fixed w-full">
       {isNavigationOpen && (
-        <div className="fixed w-screen h-screen bg-white fade-in px-4 py-2 flex flex-col">
+        <nav className="fixed w-screen h-screen bg-white fade-in px-4 py-2 flex flex-col">
           <X
-            onClick={() => setIsNavigationOpen(false)}
+            onClick={handleNavigationClose}
             size={40}
             className="self-end mb-8 mt-1"
           />
           <Link
             href="/"
             className="self-center mb-8"
-            onClick={() => setIsNavigationOpen(false)}
+            onClick={handleNavigationClose}
           >
             <Image src="/images/logo.svg" alt="logo" width={50} height={50} />
           </Link>
 
           <div
-            className="self-center justify-self-center text-center flex flex-col gap-6 uppercase text-xl"
-            onClick={() => setIsNavigationOpen(false)}
+            className="self-center justify-self-center text-center flex flex-col gap-6"
+            onClick={handleNavigationClose}
           >
-            <Link href="/portfolio">portfolio</Link>
-            <Link href="/biography">biography</Link>
-            <Link href="/exhibitions">exhibitions</Link>
-            <Link href="/contact">contact</Link>
+            <NavigationItem url="/portfolio" text="portfolio" />
+            <NavigationItem url="/biography" text="biography" />
+            <NavigationItem url="/exhibitions" text="exhibitions" />
+            <NavigationItem url="/contact" text="contact" />
           </div>
-        </div>
+        </nav>
       )}
       <div
         className={cn(
@@ -55,6 +59,6 @@ export default function Navigation() {
           color={pathname === "/" ? "white" : "black"}
         />
       </div>
-    </nav>
+    </header>
   );
 }

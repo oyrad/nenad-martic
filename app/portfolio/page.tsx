@@ -1,3 +1,9 @@
+import Title from "../_components/Title";
+
 export default function Categories() {
-  return <>portfolio</>;
+  return (
+    <section className="px-4">
+      <Title text="portfolio" />
+    </section>
+  );
 }
