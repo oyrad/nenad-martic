@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Navigation from "./_components/Navigation";
 import { Jost } from "next/font/google";
 import "./globals.css";
 
@@ -18,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={jost.className}>
-        <Navigation />
-        <main className="pt-16">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   );

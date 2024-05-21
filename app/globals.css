@@ -42,3 +42,16 @@
     opacity: 0;
   }
 }
+
+#background-image {
+  background-image: url("/images/background-construction.jpeg");
+  background-size: cover;
+  background-position: bottom right;
+  height: 100vh;
+}
+
+html,
+body,
+main {
+  height: 100vh;
+}
