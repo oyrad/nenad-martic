@@ -29,29 +29,3 @@
     opacity: 1;
   }
 }
-
-.fade-out {
-  animation: fadeOut 200ms ease-in-out;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-#background-image {
-  background-image: url("/images/background-construction.jpeg");
-  background-size: cover;
-  background-position: bottom right;
-  height: 100vh;
-}
-
-html,
-body,
-main {
-  height: 100vh;
-}
