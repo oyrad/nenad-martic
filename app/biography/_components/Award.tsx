@@ -4,7 +4,6 @@ interface AwardProps {
 }
 
 export default function Award({ year, name }: AwardProps) {
-  console.log({ year, name });
   return (
     <div className="flex gap-2">
       <p className="text-crimson font-medium">{year.toString()}</p>

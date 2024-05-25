@@ -1,5 +1,4 @@
 import Title from "../_components/Title";
-
 import AwardList from "./_components/AwardList";
 
 export default function Biography() {
