@@ -6,6 +6,20 @@ import useExhibitions, {
 import Exhibition from "./_components/Exhibition";
 import { Entry } from "contentful";
 
+export interface Image {
+  fields: {
+    file: {
+      url: string;
+      details: {
+        image: {
+          width: number;
+          height: number;
+        };
+      };
+    };
+  };
+}
+
 export default async function Exhibitions() {
   const upcomingExhibitions = await useExhibitions({
     status: "upcoming",
@@ -27,8 +41,7 @@ export default async function Exhibitions() {
               name={exhibition.fields.name as string}
               year={exhibition.fields.year as number}
               description={exhibition.fields.description as string}
-              images={exhibition.fields.images as string[]}
-              status={exhibition.fields.status as Status}
+              images={exhibition.fields.images as unknown as Image[]}
             />
           )
         )}
@@ -42,8 +55,7 @@ export default async function Exhibitions() {
               name={exhibition.fields.name as string}
               year={exhibition.fields.year as number}
               description={exhibition.fields.description as string}
-              images={exhibition.fields.images as string[]}
-              status={exhibition.fields.status as Status}
+              images={exhibition.fields.images as unknown as Image[]}
             />
           )
         )}

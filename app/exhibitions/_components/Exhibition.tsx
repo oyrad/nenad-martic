@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { makeUrl } from "@/lib/utils";
+import { Image as ImageType } from "../page";
 
 interface ExhibitionProps {
   name: string;
   year: number;
   description: string;
-  images: string[];
-  status: "upcoming" | "past";
+  images: ImageType[];
 }
 
 export default function Exhibition({
@@ -14,10 +14,7 @@ export default function Exhibition({
   year,
   description,
   images,
-  status,
 }: ExhibitionProps) {
-  console.log(images[0].fields.file.details.image.width);
-
   return (
     <div>
       <div className="text-xl flex gap-2 mb-2">
