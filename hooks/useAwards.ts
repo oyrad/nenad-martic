@@ -12,9 +12,9 @@ export type AwardEntrySkeleton = {
 };
 
 export default async function useAwards() {
-  const response = await client.getEntries<AwardEntrySkeleton>({
+  const { items } = await client.getEntries<AwardEntrySkeleton>({
     content_type: "award",
   });
 
-  return response.items.sort((a, b) => a.fields.year - b.fields.year);
+  return items.sort((a, b) => a.fields.year - b.fields.year);
 }

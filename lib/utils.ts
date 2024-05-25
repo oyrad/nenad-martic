@@ -6,5 +6,5 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function makeUrl(path: string) {
-  return `https://${path}`;
+  return `https:${path}`;
 }

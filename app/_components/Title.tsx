@@ -1,5 +1,19 @@
-export default function Title({ text }: { text: string }) {
+import { cn } from "@/lib/utils";
+
+interface TitleProps {
+  text: string;
+  className?: string;
+}
+
+export default function Title({ text, className = "" }: TitleProps) {
   return (
-    <h1 className="text-crimson font-light text-2xl uppercase pt-4">{text}</h1>
+    <h1
+      className={cn(
+        "text-crimson font-light text-2xl uppercase pt-4",
+        className
+      )}
+    >
+      {text}
+    </h1>
   );
 }

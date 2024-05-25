@@ -23,15 +23,15 @@ export default function Biography() {
         </span>
         .
       </p>
-      <p className="font-medium">
+      <p className="font-light">
+        He exhibits in numerous exhibitions both nationally and internationally.
+        This is his eighth solo exhibition in domestic galleries. He lives and
+        works in Zagreb.
+      </p>
+      <p className="font-light">
         Among the significant achievements, the following stand out:
       </p>
       <AwardList />
-      <p className="font-light">
-        He exhibits in numerous exhibitions both nationally and internationally.
-        This is his eighth solo exhibition in domestic galleries
-      </p>
-      <p className="font-light">He lives and works in Zagreb.</p>
     </section>
   );
 }
