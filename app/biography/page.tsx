@@ -1,5 +1,5 @@
 import Title from "../_components/Title";
-import Award from "./_components/Award";
+
 import AwardList from "./_components/AwardList";
 
 export default function Biography() {
