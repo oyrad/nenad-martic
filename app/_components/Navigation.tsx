@@ -19,7 +19,7 @@ export default function Navigation() {
   return (
     <header className="fixed w-full">
       {isNavigationOpen && (
-        <nav className="fixed w-screen h-screen bg-white fade-in px-4 py-2 flex flex-col">
+        <nav className="fixed w-screen h-screen bg-background fade-in px-4 py-3 flex flex-col">
           <X
             onClick={handleNavigationClose}
             size={40}
@@ -30,7 +30,12 @@ export default function Navigation() {
             className="self-center mb-8"
             onClick={handleNavigationClose}
           >
-            <Image src="/images/logo.svg" alt="logo" width={50} height={50} />
+            <Image
+              src="/images/logo-black.svg"
+              alt="logo"
+              width={42}
+              height={42}
+            />
           </Link>
 
           <div
@@ -46,15 +51,24 @@ export default function Navigation() {
       )}
       <div
         className={cn(
-          "flex justify-between items-center px-4 py-2 z-10",
-          pathname !== "/" && "bg-white"
+          "flex justify-between items-center px-4 py-3 z-10",
+          pathname !== "/" && "bg-background"
         )}
       >
         <Link href="/">
-          <Image src="/images/logo.svg" alt="logo" width={50} height={50} />
+          <Image
+            src={
+              pathname === "/"
+                ? "/images/logo-white.svg"
+                : "/images/logo-black.svg"
+            }
+            alt="logo"
+            width={42}
+            height={42}
+          />
         </Link>
         <List
-          size={46}
+          size={42}
           onClick={() => setIsNavigationOpen(true)}
           color={pathname === "/" ? "white" : "black"}
         />

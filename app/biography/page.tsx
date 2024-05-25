@@ -1,5 +1,6 @@
 import Title from "../_components/Title";
 import Award from "./_components/Award";
+import AwardList from "./_components/AwardList";
 
 export default function Biography() {
   return (
@@ -26,12 +27,7 @@ export default function Biography() {
       <p className="font-medium">
         Among the significant achievements, the following stand out:
       </p>
-      <div className="flex flex-col gap-2">
-        <Award year="2023" name="award name" />
-        <Award year="2023" name="award name" />
-        <Award year="2023" name="award name" />
-        <Award year="2023" name="award name" />
-      </div>
+      <AwardList />
       <p className="font-light">
         He exhibits in numerous exhibitions both nationally and internationally.
         This is his eighth solo exhibition in domestic galleries

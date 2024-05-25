@@ -14,8 +14,8 @@ export default function NavigationItem({ url, text }: NavigationItemProps) {
     <Link
       href={url}
       className={cn(
-        "font-light text-xl uppercase",
-        pathname.includes(url) && "text-crimson"
+        "font-light text-2xl uppercase",
+        pathname.includes(url) && "text-crimson border-b border-crimson px-2"
       )}
     >
       {text}

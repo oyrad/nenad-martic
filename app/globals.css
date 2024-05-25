@@ -8,6 +8,10 @@
   padding: 0;
 }
 
+body {
+  background-color: #f6f2ec;
+}
+
 #cover-video {
   position: fixed;
   width: 100%;
@@ -27,18 +31,5 @@
   }
   100% {
     opacity: 1;
-  }
-}
-
-.fade-out {
-  animation: fadeOut 200ms ease-in-out;
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
   }
 }

@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         crimson: "#C62F20",
+        background: "#F6F2EC",
       },
     },
   },
