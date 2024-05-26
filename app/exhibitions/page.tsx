@@ -1,7 +1,6 @@
 import Title from "../_components/Title";
 import useExhibitions, {
   ExhibitionEntrySkeleton,
-  Status,
 } from "@/hooks/useExhibitions";
 import Exhibition from "./_components/Exhibition";
 import { Entry } from "contentful";

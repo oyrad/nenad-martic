@@ -1,10 +1,17 @@
 import Title from "../_components/Title";
 import AwardList from "./_components/AwardList";
+import Image from "next/image";
 
 export default function Biography() {
   return (
     <section className="px-4 flex flex-col gap-4">
       <Title text="Biography" />
+      <Image
+        src="/images/biography.png"
+        alt="biography"
+        width={1000}
+        height={100}
+      />
       <p className="font-light">
         Nenad Martić was born and educated in Zagreb. He graduated from the
         Faculty of Education in Zagreb, majoring in Fine Arts. At the beginning
