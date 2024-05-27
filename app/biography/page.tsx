@@ -38,7 +38,7 @@ export default function Biography() {
         works in Zagreb.
       </p>
       <p className="font-light">
-        Among the significant achievements, the following stand out:
+        Among significant achievements, following stand out:
       </p>
       <AwardList />
     </section>
