@@ -7,6 +7,7 @@ import { Entry } from "contentful";
 
 export interface Image {
   fields: {
+    title: string;
     file: {
       url: string;
       details: {

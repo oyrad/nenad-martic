@@ -1,4 +1,4 @@
-import { Entry, EntryCollection } from "contentful";
+import { Entry } from "contentful";
 import Award from "./Award";
 import useAwards, { AwardEntrySkeleton } from "@/hooks/useAwards";
 

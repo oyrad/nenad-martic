@@ -13,7 +13,7 @@ export default function Navigation() {
   const pathname = usePathname();
 
   function handleNavigationClose() {
-    setTimeout(() => setIsNavigationOpen(false), 100);
+    setIsNavigationOpen(false);
   }
 
   return (

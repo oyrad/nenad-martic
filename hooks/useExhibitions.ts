@@ -17,7 +17,7 @@ export type ExhibitionEntrySkeleton = {
 export type Status = "upcoming" | "past";
 
 interface UseExhibitionsOptions {
-  status: "upcoming" | "past";
+  status: Status;
 }
 
 export default async function useExhibitions(options: UseExhibitionsOptions) {
