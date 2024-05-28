@@ -4,21 +4,7 @@ import useExhibitions, {
 } from "@/hooks/useExhibitions";
 import Exhibition from "./_components/Exhibition";
 import { Entry } from "contentful";
-
-export interface Image {
-  fields: {
-    title: string;
-    file: {
-      url: string;
-      details: {
-        image: {
-          width: number;
-          height: number;
-        };
-      };
-    };
-  };
-}
+import { Image } from "@/types/types";
 
 export default async function Exhibitions() {
   const upcomingExhibitions = await useExhibitions({

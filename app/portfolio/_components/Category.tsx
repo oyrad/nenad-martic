@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Image as ImageType } from "../../exhibitions/page";
-import { makeUrl } from "@/lib/utils";
+import { getSlug, makeUrl } from "@/lib/utils";
+import Link from "next/link";
 
 interface CategoryProps {
   coverImage: ImageType;
@@ -13,9 +14,11 @@ export default function Category({
   title,
   subtitle,
 }: CategoryProps) {
-  console.log(coverImage);
   return (
-    <div className="text-center flex flex-col gap-1">
+    <Link
+      className="text-center flex flex-col gap-1"
+      href={`/portfolio/${getSlug(title)}`}
+    >
       <Image
         src={makeUrl(coverImage.fields.file.url)}
         alt={coverImage.fields.title}
@@ -25,6 +28,6 @@ export default function Category({
       />
       <h2 className="font-medium text-xl">{title}</h2>
       <p className="font-light">{subtitle}</p>
-    </div>
+    </Link>
   );
 }

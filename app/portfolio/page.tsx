@@ -1,5 +1,5 @@
 import Title from "../_components/Title";
-import { Image } from "../exhibitions/page";
+import { Image } from "@/types/types";
 
 import Category from "./_components/Category";
 import useCategories from "@/hooks/useCategories";

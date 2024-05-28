@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { makeUrl } from "@/lib/utils";
-import { Image as ImageType } from "../page";
+import { Image as ImageType } from "@/types/types";
 
 interface ExhibitionProps {
   name: string;

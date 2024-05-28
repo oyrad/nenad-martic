@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function makeUrl(path: string) {
   return `https:${path}`;
 }
+
+export function getSlug(title: string) {
+  return title.toLowerCase().replace(" ", "-");
+}

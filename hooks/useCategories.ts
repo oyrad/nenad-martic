@@ -1,12 +1,13 @@
 import { client } from "@/contentful";
 import { EntryFieldTypes } from "contentful";
 
-type CategoryFields = {
+export type CategoryFields = {
   title: EntryFieldTypes.Text;
   subtitle: EntryFieldTypes.Text;
   coverImage: EntryFieldTypes.Symbol;
   images: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
   description?: EntryFieldTypes.Text;
+  slug: EntryFieldTypes.Text;
 };
 
 export type CategoryEntrySkeleton = {
