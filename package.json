@@ -13,6 +13,7 @@
     "clsx": "^2.1.1",
     "contentful": "^10.11.3",
     "next": "14.2.3",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-responsive-masonry": "^2.2.0",
