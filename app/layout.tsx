@@ -3,6 +3,7 @@ import Navigation from "./_components/Navigation";
 import { Jost } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import { Suspense } from "react";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(jost.className, "text-blackish pb-8")}>
-        <Navigation />
-        <main className="pt-16">{children}</main>
+        <Suspense>
+          <Navigation />
+          <main className="pt-16">{children}</main>
+        </Suspense>
       </body>
     </html>
   );
