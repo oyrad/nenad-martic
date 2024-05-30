@@ -9,7 +9,7 @@ export default async function Categories() {
   return (
     <section className="px-4">
       <Title text="portfolio" className="mb-6" />
-      <div className="grid grid-cols-1 gap-8 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {categories.map((category: any, index: number) => (
           <Category
             key={index}
@@ -20,13 +20,13 @@ export default async function Categories() {
             href={`/portfolio/${category.fields.slug}`}
           />
         ))}
+        <Category
+          coverImageUrl="/images/concept.png"
+          coverImageAlt="concept"
+          title="Concept"
+          href="/portfolio/concept"
+        />
       </div>
-      <Category
-        coverImageUrl="/images/concept.png"
-        coverImageAlt="concept"
-        title="Concept"
-        href="/portfolio/concept"
-      />
     </section>
   );
 }

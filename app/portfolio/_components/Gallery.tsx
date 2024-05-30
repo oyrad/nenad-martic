@@ -1,12 +1,15 @@
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Image as ImageType } from "@/types/types";
 import { getSlug, makeUrl } from "@/lib/utils";
-import GalleryImage from "./GalleryImage";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { X, ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { X, ArrowLeft } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import ImageGallery from "react-image-gallery";
+import { useRouter } from "next/navigation";
+
+import "react-image-gallery/styles/css/image-gallery.css";
 
 interface GalleryProps {
   images: ImageType[];
@@ -16,6 +19,7 @@ interface GalleryProps {
 export default function Gallery({ images, slug }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isImageNotFound, setIsImageNotFound] = useState(false);
+  const router = useRouter();
 
   const imageParam = useSearchParams().get("image");
 
@@ -54,55 +58,41 @@ export default function Gallery({ images, slug }: GalleryProps) {
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4">
           <Link
             href={`/portfolio/${slug}`}
-            className="self-end mb-8"
+            className="self-end mb-12"
             onClick={() => setSelectedImage(null)}
           >
             <X size={32} />
           </Link>
 
-          {selectedImage && (
-            <Image
-              src={makeUrl(selectedImage!.fields.file.url)}
-              alt={selectedImage!.fields.title}
-              width={selectedImage!.fields.file.details.image.width}
-              height={selectedImage!.fields.file.details.image.height}
-              className="self-center mb-4"
-            />
-          )}
-          <Link
-            href={`/portfolio/${slug}?image=${getSlug(
-              images[images.indexOf(selectedImage!) - 1]?.fields.title ||
-                images[images.length - 1].fields.title
-            )}`}
-          >
-            <ArrowLeft
-              size={32}
-              onClick={() => {
-                const index = images.indexOf(selectedImage!);
-                setSelectedImage(
-                  images[index - 1] || images[images.length - 1]
-                );
-              }}
-            />
-          </Link>
-          <p>
+          <ImageGallery
+            items={images.map((image) => ({
+              originalTitle: image.fields.title,
+              original: makeUrl(image.fields.file.url),
+            }))}
+            infinite={true}
+            showThumbnails={false}
+            showFullscreenButton={false}
+            showPlayButton={false}
+            showNav={false}
+            startIndex={selectedImage ? images.indexOf(selectedImage) : 0}
+            onSlide={(currentIndex) => {
+              setSelectedImage(images[currentIndex]);
+              router.replace(
+                `/portfolio/${slug}?image=${getSlug(
+                  images[currentIndex].fields.title
+                )}`
+              );
+            }}
+            additionalClass="mb-4"
+          />
+
+          <p className="text-center text-xl font-light mb-6">
+            {selectedImage?.fields.title}
+          </p>
+
+          <p className="text-center text-gray-500">
             {images.indexOf(selectedImage!) + 1} / {images.length}
           </p>
-          <Link
-            href={`/portfolio/${slug}?image=${getSlug(
-              images[images.indexOf(selectedImage!) + 1]?.fields.title ||
-                images[0].fields.title
-            )}`}
-          >
-            <ArrowRight
-              size={32}
-              onClick={() => {
-                const index = images.indexOf(selectedImage!);
-                setSelectedImage(images[index + 1] || images[0]);
-              }}
-            />
-          </Link>
-          <p className="text-center">{selectedImage?.fields.title}</p>
         </div>
       ) : (
         <ResponsiveMasonry columnsCountBreakPoints={{ 750: 2, 900: 3 }}>
@@ -113,7 +103,7 @@ export default function Gallery({ images, slug }: GalleryProps) {
                 href={`/portfolio/${slug}?image=${getSlug(image.fields.title)}`}
                 onClick={() => setSelectedImage(image)}
               >
-                <GalleryImage
+                <Image
                   src={makeUrl(image.fields.file.url)}
                   alt={image.fields.title}
                   width={image.fields.file.details.image.width}
