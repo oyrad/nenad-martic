@@ -14,7 +14,15 @@ export const client = createClient({
   accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
 });
 
-export default function CategoryDetails() {
+interface CategoryDetailsProps {
+  backButtonHref: string;
+  isConcept: boolean;
+}
+
+export default function CategoryDetails({
+  backButtonHref,
+  isConcept,
+}: CategoryDetailsProps) {
   const { slug } = useParams();
   const [categoryDetails, setCategoryDetails] = useState<any>();
 
@@ -41,16 +49,23 @@ export default function CategoryDetails() {
     return (
       <div className="px-4 pt-4">
         {!imageParam && (
-          <div className="grid grid-cols-8 mb-6">
-            <Link href="/portfolio">
-              <ArrowLeft size={32} />
-            </Link>
-            <h1 className="text-crimson font-light uppercase text-2xl col-span-6 place-self-center">
-              {categoryDetails.title}
-            </h1>
-          </div>
+          <>
+            <div className="grid grid-cols-8 mb-6">
+              <Link href={backButtonHref}>
+                <ArrowLeft size={32} />
+              </Link>
+              <h1 className="text-crimson font-light uppercase text-2xl col-span-6 place-self-center">
+                {categoryDetails.title}
+              </h1>
+            </div>
+            <h3 className="mb-6 font-light">{categoryDetails.description}</h3>
+          </>
         )}
-        <Gallery images={categoryDetails.images} slug={slug as string} />
+        <Gallery
+          images={categoryDetails.images}
+          slug={slug as string}
+          isConcept={isConcept}
+        />
       </div>
     );
   }

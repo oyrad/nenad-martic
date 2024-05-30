@@ -1,5 +1,7 @@
 import CategoryDetails from "../../_components/CategoryDetails";
 
 export default function ConceptCategoryDetails() {
-  return <CategoryDetails />;
+  return (
+    <CategoryDetails backButtonHref="/portfolio/concept" isConcept={true} />
+  );
 }

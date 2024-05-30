@@ -14,9 +14,10 @@ import "react-image-gallery/styles/css/image-gallery.css";
 interface GalleryProps {
   images: ImageType[];
   slug: string;
+  isConcept: boolean;
 }
 
-export default function Gallery({ images, slug }: GalleryProps) {
+export default function Gallery({ images, slug, isConcept }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isImageNotFound, setIsImageNotFound] = useState(false);
   const router = useRouter();
@@ -42,7 +43,7 @@ export default function Gallery({ images, slug }: GalleryProps) {
     return (
       <>
         <Link
-          href={`/portfolio/${slug}`}
+          href={isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`}
           onClick={() => setIsImageNotFound(false)}
         >
           <ArrowLeft size={32} />
@@ -57,7 +58,9 @@ export default function Gallery({ images, slug }: GalleryProps) {
       {imageParam ? (
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4">
           <Link
-            href={`/portfolio/${slug}`}
+            href={
+              isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
+            }
             className="self-end mb-12"
             onClick={() => setSelectedImage(null)}
           >
@@ -78,9 +81,13 @@ export default function Gallery({ images, slug }: GalleryProps) {
             onSlide={(currentIndex) => {
               setSelectedImage(images[currentIndex]);
               router.replace(
-                `/portfolio/${slug}?image=${getSlug(
-                  images[currentIndex].fields.title
-                )}`
+                isConcept
+                  ? `/portfolio/concept/${slug}?image=${getSlug(
+                      images[currentIndex].fields.title
+                    )}`
+                  : `/portfolio/${slug}?image=${getSlug(
+                      images[currentIndex].fields.title
+                    )}`
               );
             }}
             additionalClass="mb-4"
@@ -100,7 +107,13 @@ export default function Gallery({ images, slug }: GalleryProps) {
             {images.map((image, index) => (
               <Link
                 key={index}
-                href={`/portfolio/${slug}?image=${getSlug(image.fields.title)}`}
+                href={
+                  isConcept
+                    ? `/portfolio/concept/${slug}?image=${getSlug(
+                        image.fields.title
+                      )}`
+                    : `/portfolio/${slug}?image=${getSlug(image.fields.title)}`
+                }
                 onClick={() => setSelectedImage(image)}
               >
                 <Image
