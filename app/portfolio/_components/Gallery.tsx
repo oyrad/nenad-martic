@@ -55,7 +55,7 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
 
   return (
     <>
-      {imageParam ? (
+      {selectedImage ? (
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4">
           <Link
             href={
