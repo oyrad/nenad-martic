@@ -55,17 +55,18 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
 
   return (
     <>
-      {selectedImage ? (
+      {selectedImage && imageParam ? (
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4">
-          <Link
-            href={
-              isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
-            }
+          <X
+            size={32}
             className="self-end mb-12"
-            onClick={() => setSelectedImage(null)}
-          >
-            <X size={32} />
-          </Link>
+            onClick={() => {
+              setSelectedImage(null);
+              router.push(
+                isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
+              );
+            }}
+          />
 
           <ImageGallery
             items={images.map((image) => ({

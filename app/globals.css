@@ -33,3 +33,8 @@ body {
     opacity: 1;
   }
 }
+
+.fadeOut {
+  transition: opacity 500ms ease-out;
+  opacity: 0;
+}
