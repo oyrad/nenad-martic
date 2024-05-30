@@ -17,7 +17,7 @@ export default async function Exhibitions() {
 
   return (
     <section className="px-4">
-      <Title text="exhibitions" className="mb-6" />
+      <Title text="exhibitions" />
       <p className="font-medium text-lg mb-4">upcoming</p>
       <div className="mb-8">
         {upcomingExhibitions.map(

@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Contact() {
   return (
     <section className="flex flex-col gap-2 px-4 text-center">
-      <Title text="Contact" className="mb-4" />
+      <Title text="Contact" className="mb-8" />
       <div className="flex gap-2 justify-center mb-1">
         <Link href="https://www.instagram.com/nenadmartic_art/">
           <InstagramLogo size={32} />

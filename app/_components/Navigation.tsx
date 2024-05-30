@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import NavigationItem from "./NavigationItem";
+import { useSearchParams } from "next/navigation";
 
 export default function Navigation() {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
@@ -14,6 +15,12 @@ export default function Navigation() {
 
   function handleNavigationClose() {
     setIsNavigationOpen(false);
+  }
+
+  const imageParam = useSearchParams().get("image");
+
+  if (imageParam) {
+    return null;
   }
 
   return (
@@ -39,7 +46,7 @@ export default function Navigation() {
           </Link>
 
           <div
-            className="self-center justify-self-center text-center flex flex-col gap-6"
+            className="self-center justify-self-center text-center flex flex-col gap-8"
             onClick={handleNavigationClose}
           >
             <NavigationItem url="/portfolio" text="portfolio" />
