@@ -13,7 +13,7 @@ export default function Home() {
       setTimeout(() => {
         setIsTimeoutDone(true);
       }, 500);
-    }, 500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
