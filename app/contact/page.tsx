@@ -3,8 +3,7 @@
 import { FacebookLogo, InstagramLogo } from "@phosphor-icons/react";
 import Title from "../_components/Title";
 import Link from "next/link";
-import ContactImage from "@/public/images/contact.webp";
-import Image from "next/image";
+import FadeInImage from "../_components/FadeInImage";
 
 export default function Contact() {
   return (
@@ -27,13 +26,7 @@ export default function Contact() {
       >
         nenomartic@gmail.com
       </Link>
-      <Image
-        src={ContactImage}
-        alt="Contact"
-        placeholder="blur"
-        width={1000}
-        height={1000}
-      />
+      <FadeInImage src="/images/contact.webp" alt="Contact" />
     </section>
   );
 }

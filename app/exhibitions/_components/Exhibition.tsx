@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { makeUrl } from "@/lib/utils";
 import { Image as ImageType } from "@/types/types";
+import FadeInImage from "@/app/_components/FadeInImage";
 
 interface ExhibitionProps {
   name: string;
@@ -24,12 +24,10 @@ export default function Exhibition({
       <p className="text-lg font-extralight leading-6 mb-2">{description}</p>
       <div className="grid grid-cols-3 gap-1">
         {images.map((image, index) => (
-          <Image
+          <FadeInImage
             key={index}
             src={makeUrl(image.fields.file.url)}
             alt={name}
-            width={image.fields.file.details.image.width}
-            height={image.fields.file.details.image.height}
           />
         ))}
       </div>

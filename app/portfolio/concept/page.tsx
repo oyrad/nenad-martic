@@ -17,7 +17,7 @@ export default async function Concept() {
           concept
         </h1>
       </div>
-      <div className="grid grid-cols-1 gap-8 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
         {categories.map((category: any, index: number) => (
           <Category
             key={index}

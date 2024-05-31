@@ -5,11 +5,10 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { X, ArrowLeft } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import ImageGallery from "react-image-gallery";
 import { useRouter } from "next/navigation";
-
 import "react-image-gallery/styles/css/image-gallery.css";
+import FadeInImage from "@/app/_components/FadeInImage";
 
 interface GalleryProps {
   images: ImageType[];
@@ -117,11 +116,9 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
                 }
                 onClick={() => setSelectedImage(image)}
               >
-                <Image
+                <FadeInImage
                   src={makeUrl(image.fields.file.url)}
                   alt={image.fields.title}
-                  width={image.fields.file.details.image.width}
-                  height={image.fields.file.details.image.height}
                 />
               </Link>
             ))}

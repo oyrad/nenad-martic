@@ -29,7 +29,7 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
         alt="logo"
         width={150}
         height={150}
-        className="fade-in-logo mb-8"
+        className="fade-in-logo mb-4"
       />
       {shouldTextBeShown ? (
         <div className="text-center fade-in text-white uppercase">
