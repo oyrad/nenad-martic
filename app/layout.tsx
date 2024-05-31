@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Navigation from "./_components/Navigation";
+import MobileNavigation from "./_components/MobileNavigation";
+import DesktopNavigation from "./_components/DesktopNavigation";
 import { Jost } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
@@ -22,8 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(jost.className, "text-blackish pb-8")}>
         <Suspense>
-          <Navigation />
-          <main className="pt-16">{children}</main>
+          <MobileNavigation />
+          <DesktopNavigation />
+          <main className="pt-16 md:pt-0">{children}</main>
         </Suspense>
       </body>
     </html>

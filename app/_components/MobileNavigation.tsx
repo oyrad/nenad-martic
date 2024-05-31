@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import NavigationItem from "./NavigationItem";
 import { useSearchParams } from "next/navigation";
 
-export default function Navigation() {
+export default function MobileNavigation() {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
   const pathname = usePathname();
 
@@ -24,7 +24,7 @@ export default function Navigation() {
   }
 
   return (
-    <header className="fixed w-full">
+    <header className="fixed w-full md:hidden">
       {isNavigationOpen && (
         <nav className="fixed w-screen h-screen bg-background fade-in px-4 py-3 flex flex-col">
           <X
