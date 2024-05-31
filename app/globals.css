@@ -25,6 +25,10 @@ body {
   animation: fadeIn 200ms ease-in-out;
 }
 
+.fade-in-logo {
+  animation: fadeIn 1000ms ease-in-out;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

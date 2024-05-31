@@ -1,7 +1,7 @@
 import Title from "../_components/Title";
 import AwardList from "./_components/AwardList";
 import Image from "next/image";
-import BiographyImage from "@/public/images/biography.png";
+import BiographyImage from "@/public/images/biography.webp";
 
 export default function Biography() {
   return (

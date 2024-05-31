@@ -17,7 +17,7 @@ export default function Category({
   href,
 }: CategoryProps) {
   return (
-    <Link className="text-center flex flex-col gap-1" href={href}>
+    <Link className="text-center flex flex-col" href={href}>
       <Image
         src={coverImageUrl}
         alt={coverImageAlt}
@@ -25,8 +25,8 @@ export default function Category({
         height={100}
         className="mb-2"
       />
-      <h2 className="font-medium text-xl">{title}</h2>
-      {subtitle && <p className="font-light">{subtitle}</p>}
+      <h2 className="font-medium text-lg">{title}</h2>
+      {subtitle && <p className="font-light text-sm">{subtitle}</p>}
     </Link>
   );
 }
