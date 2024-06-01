@@ -17,7 +17,10 @@ export default function Category({
   href,
 }: CategoryProps) {
   return (
-    <Link className="text-center flex flex-col" href={href}>
+    <Link
+      href={href}
+      className="text-center flex flex-col hover:opacity-75 transition-all duration-200"
+    >
       <FadeInImage
         src={coverImageUrl}
         alt={coverImageAlt}

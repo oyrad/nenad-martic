@@ -56,16 +56,18 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
     <>
       {selectedImage && imageParam ? (
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4">
-          <X
-            size={32}
-            className="self-end mb-12"
-            onClick={() => {
-              setSelectedImage(null);
-              router.push(
-                isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
-              );
-            }}
-          />
+          <Link
+            href={
+              isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
+            }
+            className="self-end hover:opacity-75 transition-opacity duration-200"
+          >
+            <X
+              size={32}
+              className="self-end mb-12"
+              onClick={() => setSelectedImage(null)}
+            />
+          </Link>
 
           <ImageGallery
             items={images.map((image) => ({
@@ -93,11 +95,11 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
             additionalClass="mb-4"
           />
 
-          <p className="text-center text-xl font-light mb-6">
+          <p className="text-center text-xl md:text-2xl font-light mb-6">
             {selectedImage?.fields.title}
           </p>
 
-          <p className="text-center text-gray-500">
+          <p className="text-center md:text-lg text-gray-500">
             {images.indexOf(selectedImage!) + 1} / {images.length}
           </p>
         </div>

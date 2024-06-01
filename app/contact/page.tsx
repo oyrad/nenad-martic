@@ -11,10 +11,10 @@ export default function Contact() {
     <SectionContainer className="flex flex-col gap-2 text-center">
       <Title text="Contact" className="mb-8" />
       <div className="flex gap-2 justify-center mb-1">
-        <Link href="https://www.instagram.com/nenadmartic_art/" target="_blank">
+        <Link href="https://www.instagram.com/nenadmartic_art" target="_blank">
           <InstagramLogo size={32} />
         </Link>
-        <Link href="https://www.instagram.com/nenadmartic_art/" target="_blank">
+        <Link href="https://www.facebook.com/nenad.martic.77" target="_blank">
           <FacebookLogo size={32} />
         </Link>
       </div>
