@@ -19,12 +19,7 @@ export default function DesktopNavigation() {
       {pathname === "/" && (
         <div className="h-[66px] w-full bg-black fixed top-0 opacity-30 z-10" />
       )}
-      <nav
-        className={cn(
-          "flex justify-between md:px-20 lg:px-44 items-center",
-          pathname !== "/" && "xl:px-96"
-        )}
-      >
+      <nav className="flex justify-between md:px-20 lg:px-44 xl:px-96 items-center">
         <NavigationItem
           url="/portfolio"
           text="portfolio"
