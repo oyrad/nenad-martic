@@ -5,6 +5,7 @@ import { Jost } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Suspense } from "react";
+import NextTopLoader from "nextjs-toploader";
 
 const jost = Jost({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(jost.className, "text-blackish pb-8")}>
+        <NextTopLoader color="#C62F20" showSpinner={false} />
         <Suspense>
           <MobileNavigation />
           <DesktopNavigation />
