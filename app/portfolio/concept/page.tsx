@@ -1,23 +1,24 @@
 import useCategories from "@/hooks/useCategories";
-import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import Category from "../_components/Category";
 import { makeUrl } from "@/lib/utils";
+import SectionContainer from "@/app/_components/SectionContainer";
+import BackArrow from "@/app/_components/BackArrow";
 
 export default async function Concept() {
   const categories = await useCategories({ isConcept: true });
 
   return (
-    <section className="px-4 pt-4">
-      <div className="grid grid-cols-3 mb-6">
+    <SectionContainer className="pt-4">
+      <div className="grid grid-cols-3 mb-6 md:mb-8">
         <Link href="/portfolio">
-          <ArrowLeft size={32} />
+          <BackArrow />
         </Link>
-        <h1 className="text-crimson font-light uppercase text-2xl place-self-center">
+        <h1 className="text-crimson font-light uppercase text-2xl md:text-4xl place-self-center">
           concept
         </h1>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
         {categories.map((category: any, index: number) => (
           <Category
             key={index}
@@ -29,6 +30,6 @@ export default async function Concept() {
           />
         ))}
       </div>
-    </section>
+    </SectionContainer>
   );
 }

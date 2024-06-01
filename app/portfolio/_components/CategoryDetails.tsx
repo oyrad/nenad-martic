@@ -8,6 +8,8 @@ import { createClient } from "contentful";
 import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import SectionContainer from "@/app/_components/SectionContainer";
+import BackArrow from "@/app/_components/BackArrow";
 
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
@@ -47,26 +49,26 @@ export default function CategoryDetails({
 
   if (categoryDetails) {
     return (
-      <div className="px-4 pt-4">
+      <SectionContainer className="pt-4">
         {!imageParam && (
-          <>
-            <div className="grid grid-cols-8 mb-6">
+          <div className="md:mb-8">
+            <div className="grid grid-cols-8 items-center mb-6">
               <Link href={backButtonHref}>
-                <ArrowLeft size={32} />
+                <BackArrow />
               </Link>
-              <h1 className="text-crimson font-light uppercase text-2xl col-span-6 place-self-center">
+              <h1 className="text-crimson font-light uppercase text-2xl md:text-4xl col-span-6 place-self-center">
                 {categoryDetails.title}
               </h1>
             </div>
             <h3 className="mb-6 font-light">{categoryDetails.description}</h3>
-          </>
+          </div>
         )}
         <Gallery
           images={categoryDetails.images}
           slug={slug as string}
           isConcept={isConcept}
         />
-      </div>
+      </SectionContainer>
     );
   }
 }

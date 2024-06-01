@@ -41,6 +41,7 @@ export default function DesktopNavigation() {
             alt="logo"
             width={42}
             height={42}
+            className="hover:opacity-70 transform-opactiy duration-200"
           />
         </Link>
         <NavigationItem url="/exhibitions" text="exhibitions" />

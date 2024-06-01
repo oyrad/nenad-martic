@@ -115,10 +115,12 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
                     : `/portfolio/${slug}?image=${getSlug(image.fields.title)}`
                 }
                 onClick={() => setSelectedImage(image)}
+                className="overflow-hidden"
               >
                 <FadeInImage
                   src={makeUrl(image.fields.file.url)}
                   alt={image.fields.title}
+                  className="hover:scale-110 transition-transform duration-500"
                 />
               </Link>
             ))}
