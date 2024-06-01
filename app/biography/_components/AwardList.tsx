@@ -7,7 +7,7 @@ export default async function AwardList() {
 
   if (awards) {
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {awards.map((award: Entry<AwardEntrySkeleton>, index: number) => (
           <Award
             key={index}

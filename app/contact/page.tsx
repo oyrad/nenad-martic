@@ -18,13 +18,10 @@ export default function Contact() {
           <FacebookLogo size={32} />
         </Link>
       </div>
-      <Link className="text-xl font-light" href="tel:+38598230547">
+      <Link className="text-xl" href="tel:+38598230547">
         +385 98 230 547
       </Link>
-      <Link
-        className="text-xl font-light mb-4"
-        href="mailto:nenomartic@gmail.com"
-      >
+      <Link className="text-xl mb-4" href="mailto:nenomartic@gmail.com">
         nenomartic@gmail.com
       </Link>
       <FadeInImage src="/images/contact.webp" alt="Contact" />
