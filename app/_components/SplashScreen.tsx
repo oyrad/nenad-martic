@@ -12,7 +12,7 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShouldTextBeShown(true);
-    }, 1000);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
@@ -32,14 +32,14 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
         className="fade-in-logo mb-4"
       />
       {shouldTextBeShown ? (
-        <div className="text-center fade-in text-white uppercase">
-          <h1 className=" text-3xl mb-2">nenad martic</h1>
-          <h2 className="text-2xl">Master of photography</h2>
+        <div className="text-center fade-in-text text-white uppercase">
+          <h1 className="text-3xl md:text-4xl mb-2 md:mb-3">nenad martic</h1>
+          <h2 className="text-2xl md:text-3xl">Master of photography</h2>
         </div>
       ) : (
         <div className="text-center text-black uppercase">
-          <h1 className="text-3xl mb-2">nenad martic</h1>
-          <h2 className="text-2xl">Master of photography</h2>
+          <h1 className="text-3xl md:text-4xl mb-2 md:mb-3">nenad martic</h1>
+          <h2 className="text-2xl md:text-3xl">Master of photography</h2>
         </div>
       )}
     </div>

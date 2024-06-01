@@ -29,6 +29,10 @@ body {
   animation: fadeIn 1000ms ease-in-out;
 }
 
+.fade-in-text {
+  animation: fadeIn 500ms ease-in-out;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

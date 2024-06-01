@@ -9,7 +9,7 @@ export default function Title({ text, className = "" }: TitleProps) {
   return (
     <h1
       className={cn(
-        "text-crimson font-light text-2xl uppercase pt-4 mb-4 text-center",
+        "text-crimson font-light text-2xl md:text-4xl uppercase pt-4 mb-4 md:mb-8 text-center",
         className
       )}
     >

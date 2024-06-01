@@ -1,10 +1,11 @@
 import Title from "../_components/Title";
 import AwardList from "./_components/AwardList";
 import FadeInImage from "../_components/FadeInImage";
+import SectionContainer from "../_components/SectionContainer";
 
 export default function Biography() {
   return (
-    <section className="px-4 flex flex-col gap-4">
+    <SectionContainer className="flex flex-col gap-4">
       <Title text="about nenad" />
       <FadeInImage src="/images/biography.webp" alt="biography" />
       <p className="font-light">
@@ -34,6 +35,6 @@ export default function Biography() {
         Among significant achievements, following stand out:
       </p>
       <AwardList />
-    </section>
+    </SectionContainer>
   );
 }

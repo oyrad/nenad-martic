@@ -2,14 +2,15 @@ import Title from "../_components/Title";
 import { makeUrl } from "@/lib/utils";
 import Category from "./_components/Category";
 import useCategories from "@/hooks/useCategories";
+import SectionContainer from "../_components/SectionContainer";
 
 export default async function Categories() {
   const categories = await useCategories({ isConcept: false });
 
   return (
-    <section className="px-4">
+    <SectionContainer>
       <Title text="portfolio" className="mb-6" />
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
         {categories.map((category: any, index: number) => (
           <Category
             key={index}
@@ -27,6 +28,6 @@ export default async function Categories() {
           href="/portfolio/concept"
         />
       </div>
-    </section>
+    </SectionContainer>
   );
 }

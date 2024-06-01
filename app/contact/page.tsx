@@ -4,10 +4,11 @@ import { FacebookLogo, InstagramLogo } from "@phosphor-icons/react";
 import Title from "../_components/Title";
 import Link from "next/link";
 import FadeInImage from "../_components/FadeInImage";
+import SectionContainer from "../_components/SectionContainer";
 
 export default function Contact() {
   return (
-    <section className="flex flex-col gap-2 px-4 text-center">
+    <SectionContainer className="flex flex-col gap-2 text-center">
       <Title text="Contact" className="mb-8" />
       <div className="flex gap-2 justify-center mb-1">
         <Link href="https://www.instagram.com/nenadmartic_art/" target="_blank">
@@ -27,6 +28,6 @@ export default function Contact() {
         nenomartic@gmail.com
       </Link>
       <FadeInImage src="/images/contact.webp" alt="Contact" />
-    </section>
+    </SectionContainer>
   );
 }

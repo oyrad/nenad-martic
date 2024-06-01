@@ -18,9 +18,15 @@ export default function Category({
 }: CategoryProps) {
   return (
     <Link className="text-center flex flex-col" href={href}>
-      <FadeInImage src={coverImageUrl} alt={coverImageAlt} className="mb-2" />
-      <h2 className="font-medium text-lg">{title}</h2>
-      {subtitle && <p className="font-light text-sm">{subtitle}</p>}
+      <FadeInImage
+        src={coverImageUrl}
+        alt={coverImageAlt}
+        className="mb-2 md:mb-4"
+      />
+      <h2 className="font-medium text-lg md:text-xl">{title}</h2>
+      {subtitle && (
+        <p className="font-light text-sm md:text-base">{subtitle}</p>
+      )}
     </Link>
   );
 }

@@ -4,17 +4,32 @@ import NavigationItem from "./NavigationItem";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function DesktopNavigation() {
   const pathname = usePathname();
 
   return (
-    <header className="hidden md:block py-3 backdrop-blur-3xl">
+    <header
+      className={cn(
+        "hidden md:block py-3 backdrop-blur-3xl mb-8",
+        pathname !== "/" && "border-b border-gray-300"
+      )}
+    >
       {pathname === "/" && (
         <div className="h-[66px] w-full bg-black fixed top-0 opacity-30 z-10" />
       )}
-      <nav className="flex justify-evenly items-center">
-        <NavigationItem url="/portfolio" text="portfolio" />
+      <nav
+        className={cn(
+          "flex justify-between md:px-20 lg:px-44 items-center",
+          pathname !== "/" && "xl:px-96"
+        )}
+      >
+        <NavigationItem
+          url="/portfolio"
+          text="portfolio"
+          className={pathname === "/" ? "" : ""}
+        />
         <NavigationItem url="/biography" text="biography" />
         <Link href="/" className="z-20">
           <Image

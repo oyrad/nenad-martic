@@ -14,7 +14,7 @@ export type ExhibitionEntrySkeleton = {
   contentTypeId: "exhibition";
 };
 
-export type Status = "upcoming" | "past";
+export type Status = "upcoming" | "previous";
 
 interface UseExhibitionsOptions {
   status: Status;
