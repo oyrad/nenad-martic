@@ -22,7 +22,7 @@ export default function Exhibition({
           <p className="text-crimson font-medium">{year}</p>
           <p>{name}</p>
         </div>
-        <p className="text-lg font-extralight leading-6 mb-2">{description}</p>
+        <p className="text-lg font-light leading-6 mb-2">{description}</p>
         <div className="grid grid-cols-3 gap-1">
           {images.map((image, index) => (
             <FadeInImage
@@ -37,9 +37,7 @@ export default function Exhibition({
         <p className="text-crimson font-medium text-2xl">{year}</p>
         <div>
           <p className="text-2xl mb-4">{name}</p>
-          <p className="text-lg font-extralight leading-6 mb-4">
-            {description}
-          </p>
+          <p className="text-lg font-light leading-6 mb-4">{description}</p>
           <div className="grid grid-cols-3">
             {images.map((image, index) => (
               <FadeInImage

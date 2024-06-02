@@ -7,7 +7,7 @@ export default function SectionContainer({
   className?: string;
 }) {
   return (
-    <section className={cn("px-4 md:px-20 lg:px-44 xl:px-96", className)}>
+    <section className={cn("px-4 md:px-20 lg:px-44 xl:px-72", className)}>
       {children}
     </section>
   );

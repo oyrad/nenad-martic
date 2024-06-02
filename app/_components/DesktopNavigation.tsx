@@ -17,14 +17,10 @@ export default function DesktopNavigation() {
       )}
     >
       {pathname === "/" && (
-        <div className="h-[66px] w-full bg-black fixed top-0 opacity-30 z-10" />
+        <div className="h-[66px] w-full bg-black fixed top-0 opacity-40 z-10" />
       )}
-      <nav className="flex justify-between md:px-20 lg:px-44 xl:px-96 items-center">
-        <NavigationItem
-          url="/portfolio"
-          text="portfolio"
-          className={pathname === "/" ? "" : ""}
-        />
+      <nav className="flex justify-between md:px-20 lg:px-44 xl:px-72 items-center">
+        <NavigationItem url="/portfolio" text="portfolio" />
         <NavigationItem url="/biography" text="biography" />
         <Link href="/" className="z-20">
           <Image
