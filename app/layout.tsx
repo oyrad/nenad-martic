@@ -13,6 +13,20 @@ export const metadata: Metadata = {
   title: "Nenad Martic",
   description:
     "Nenad Martić was born and educated in Zagreb. He graduated from the Faculty of Education in Zagreb, majoring in Fine Arts. At the beginning of his rich career, he worked as an illustrator, and since 1990, he has run his own graphic design studio. Parallel to his professional career as a designer, he has shown great interest in photography.",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        href: "/images/logo-black.svg",
+        url: "/images/logo-black.svg",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        href: "/images/logo-white.svg",
+        url: "/images/logo-white.svg",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
