@@ -27,6 +27,7 @@ export default function CategoryDetails({
 }: CategoryDetailsProps) {
   const { slug } = useParams();
   const [categoryDetails, setCategoryDetails] = useState<any>();
+  const [isCategoryNotFound, setIsCategoryNotFound] = useState(false);
 
   const imageParam = useSearchParams().get("image");
 
@@ -41,11 +42,35 @@ export default function CategoryDetails({
         "fields.slug": slug as string,
       });
 
+      if (!response.items.length) {
+        setIsCategoryNotFound(true);
+        return;
+      }
+
       setCategoryDetails(response.items[0].fields);
     }
 
     getCategoryDetails();
   }, [slug]);
+
+  if (isCategoryNotFound) {
+    return (
+      <SectionContainer>
+        <p className="md:text-xl mb-2 font-light uppercase">
+          Category not found
+        </p>
+
+        <Link
+          href={isConcept ? "/portfolio/concept" : "/portfolio"}
+          className="flex gap-2 items-center"
+        >
+          <BackArrow />
+
+          <p>Return to portfolio</p>
+        </Link>
+      </SectionContainer>
+    );
+  }
 
   if (categoryDetails) {
     return (
