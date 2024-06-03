@@ -4,7 +4,7 @@ import { getSlug, makeUrl } from "@/lib/utils";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { X, ArrowLeft, ArrowRight } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import { useRouter } from "next/navigation";
 import FadeInImage from "@/app/_components/FadeInImage";
@@ -13,6 +13,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Carousel } from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import BackArrow from "@/app/_components/BackArrow";
 
 interface GalleryProps {
   images: ImageType[];
@@ -44,24 +45,75 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
     }
   }, [imageParam, images]);
 
-  function setImageParam(title: string) {
-    router.replace(
-      isConcept
-        ? `/portfolio/concept/${slug}?image=${getSlug(title)}`
-        : `/portfolio/${slug}?image=${getSlug(title)}`
-    );
-  }
+  const setImageParam = useCallback(
+    (title: string) => {
+      router.replace(
+        isConcept
+          ? `/portfolio/concept/${slug}?image=${getSlug(title)}`
+          : `/portfolio/${slug}?image=${getSlug(title)}`
+      );
+    },
+    [router, isConcept, slug]
+  );
+
+  const handlePreviousImage = useCallback(() => {
+    if (!selectedImage) return;
+
+    setAnimationKey((prevKey) => prevKey + 1);
+
+    if (images.indexOf(selectedImage) === 0) {
+      setSelectedImage(images[images.length - 1]);
+      setImageParam(images[images.length - 1].fields.title);
+      return;
+    }
+
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1]);
+    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title);
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+
+  const handleNextImage = useCallback(() => {
+    if (!selectedImage) return;
+
+    setAnimationKey((prevKey) => prevKey + 1);
+
+    if (images.indexOf(selectedImage) === images.length - 1) {
+      setSelectedImage(images[0]);
+      setImageParam(images[0].fields.title);
+      return;
+    }
+
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1]);
+    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title);
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        handlePreviousImage();
+      } else if (event.key === "ArrowRight") {
+        handleNextImage();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handlePreviousImage, handleNextImage]);
 
   if (isImageNotFound) {
     return (
       <>
+        <p className="md:text-xl mb-2 font-light uppercase">Image not found</p>
+
         <Link
           href={isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`}
           onClick={() => setIsImageNotFound(false)}
+          className="flex gap-2 items-center"
         >
-          <ArrowLeft size={32} />
+          <BackArrow />
+
+          <p>Return to {slug.replace("-", " ")}</p>
         </Link>
-        <p>Image not found</p>
       </>
     );
   }
@@ -114,22 +166,7 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
             <ArrowLeft
               size={40}
               className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-              onClick={() => {
-                setAnimationKey((prevKey) => prevKey + 1);
-
-                if (images.indexOf(selectedImage) === 0) {
-                  setSelectedImage(images[images.length - 1]);
-                  setImageParam(images[images.length - 1].fields.title);
-                  return;
-                }
-
-                setSelectedImage(
-                  (prevImage) => images[images.indexOf(prevImage!) - 1]
-                );
-                setImageParam(
-                  images[images.indexOf(selectedImage) - 1].fields.title
-                );
-              }}
+              onClick={handlePreviousImage}
             />
             <AnimatePresence mode="wait">
               <motion.div
@@ -153,22 +190,7 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
             <ArrowRight
               size={40}
               className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-              onClick={() => {
-                setAnimationKey((prevKey) => prevKey + 1);
-
-                if (images.indexOf(selectedImage) === images.length - 1) {
-                  setSelectedImage(images[0]);
-                  setImageParam(images[0].fields.title);
-                  return;
-                }
-
-                setSelectedImage(
-                  (prevImage) => images[images.indexOf(prevImage!) + 1]
-                );
-                setImageParam(
-                  images[images.indexOf(selectedImage) + 1].fields.title
-                );
-              }}
+              onClick={handleNextImage}
             />
           </div>
 
