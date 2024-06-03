@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FadeInImage from "@/app/_components/FadeInImage";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Carousel } from "react-responsive-carousel";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
 
 interface GalleryProps {
   images: ImageType[];
@@ -23,7 +23,8 @@ interface GalleryProps {
 export default function Gallery({ images, slug, isConcept }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isImageNotFound, setIsImageNotFound] = useState(false);
-  const [carouselWidth, setCarouselWidth] = useState("");
+  const [animationKey, setAnimationKey] = useState(0);
+
   const router = useRouter();
 
   const imageParam = useSearchParams().get("image");
@@ -43,27 +44,13 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
     }
   }, [imageParam, images]);
 
-  useEffect(() => {
-    if (!selectedImage || window.innerWidth < 768) {
-      return;
-    }
-
-    const { width, height } = selectedImage?.fields.file.details.image;
-
-    const aspectRatio = width / height;
-
-    if (aspectRatio < 0.75) {
-      setCarouselWidth("w-5/12");
-    } else if (aspectRatio < 1) {
-      setCarouselWidth("w-6/12");
-    } else if (aspectRatio === 1) {
-      setCarouselWidth("w-7/12");
-    } else if (aspectRatio < 1.5) {
-      setCarouselWidth("w-8/12");
-    } else if (aspectRatio > 1.5) {
-      setCarouselWidth("w-9/12");
-    }
-  }, [selectedImage]);
+  function setImageParam(title: string) {
+    router.replace(
+      isConcept
+        ? `/portfolio/concept/${slug}?image=${getSlug(title)}`
+        : `/portfolio/${slug}?image=${getSlug(title)}`
+    );
+  }
 
   if (isImageNotFound) {
     return (
@@ -82,7 +69,7 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
   return (
     <>
       {selectedImage && imageParam ? (
-        <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4 items-center justify-between">
+        <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4 items-center gap-4 md:gap-0 md:justify-between">
           <Link
             href={
               isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
@@ -96,78 +83,102 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
             />
           </Link>
 
-          <div className="flex justify-between items-center">
+          <Carousel
+            dynamicHeight
+            infiniteLoop
+            selectedItem={images.indexOf(selectedImage)}
+            useKeyboardArrows
+            showThumbs={false}
+            showArrows={false}
+            showIndicators={false}
+            statusFormatter={(current, total) => `${current} / ${total}`}
+            className="md:hidden"
+            onChange={(index) => {
+              setSelectedImage(images[index]);
+              setImageParam(images[index].fields.title);
+            }}
+          >
+            {images.map((image, index) => (
+              <div key={index}>
+                <Image
+                  src={makeUrl(image.fields.file.url)}
+                  alt={image.fields.title}
+                  width={image.fields.file.details.image.width}
+                  height={image.fields.file.details.image.height}
+                />
+              </div>
+            ))}
+          </Carousel>
+
+          <div className="justify-between items-center flex-grow w-full overflow-hidden hidden md:flex">
             <ArrowLeft
-              size={32}
-              className="cursor-pointer hidden md:block"
+              size={40}
+              className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
               onClick={() => {
+                setAnimationKey((prevKey) => prevKey + 1);
+
                 if (images.indexOf(selectedImage) === 0) {
                   setSelectedImage(images[images.length - 1]);
+                  setImageParam(images[images.length - 1].fields.title);
                   return;
                 }
 
                 setSelectedImage(
                   (prevImage) => images[images.indexOf(prevImage!) - 1]
                 );
-              }}
-            />
-            <Carousel
-              dynamicHeight
-              infiniteLoop
-              selectedItem={images.indexOf(selectedImage)}
-              useKeyboardArrows
-              showThumbs={false}
-              showArrows={false}
-              showIndicators={false}
-              statusFormatter={(current, total) => `${current} / ${total}`}
-              className={carouselWidth}
-              onChange={(index) => {
-                setSelectedImage(images[index]);
-                router.replace(
-                  isConcept
-                    ? `/portfolio/concept/${slug}?image=${getSlug(
-                        images[index].fields.title
-                      )}`
-                    : `/portfolio/${slug}?image=${getSlug(
-                        images[index].fields.title
-                      )}`
+                setImageParam(
+                  images[images.indexOf(selectedImage) - 1].fields.title
                 );
               }}
-            >
-              {images.map((image, index) => (
-                <div key={index}>
-                  <Image
-                    src={makeUrl(image.fields.file.url)}
-                    alt={image.fields.title}
-                    width={image.fields.file.details.image.width}
-                    height={image.fields.file.details.image.height}
-                  />
-                </div>
-              ))}
-            </Carousel>
+            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={animationKey}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
+              >
+                <Image
+                  src={makeUrl(selectedImage.fields.file.url)}
+                  alt={selectedImage.fields.title}
+                  width={selectedImage.fields.file.details.image.width}
+                  height={selectedImage.fields.file.details.image.height}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </motion.div>
+            </AnimatePresence>
+
             <ArrowRight
-              size={32}
-              className="cursor-pointer hidden md:block"
+              size={40}
+              className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
               onClick={() => {
+                setAnimationKey((prevKey) => prevKey + 1);
+
                 if (images.indexOf(selectedImage) === images.length - 1) {
                   setSelectedImage(images[0]);
+                  setImageParam(images[0].fields.title);
                   return;
                 }
 
                 setSelectedImage(
                   (prevImage) => images[images.indexOf(prevImage!) + 1]
                 );
+                setImageParam(
+                  images[images.indexOf(selectedImage) + 1].fields.title
+                );
               }}
             />
           </div>
 
-          <p className="text-center text-xl md:text-2xl font-light">
+          <p className="text-center text-xl md:text-2xl font-light md:mb-2">
             {selectedImage?.fields.title}
           </p>
 
-          {/*           <p className="text-center md:text-lg text-gray-500">
+          <p className="text-center md:text-lg text-gray-500 hidden md:block">
             {images.indexOf(selectedImage!) + 1} / {images.length}
-          </p> */}
+          </p>
         </div>
       ) : (
         <ResponsiveMasonry columnsCountBreakPoints={{ 750: 2, 900: 3 }}>
