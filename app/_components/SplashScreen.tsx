@@ -33,12 +33,12 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
       />
       {shouldTextBeShown ? (
         <div className="text-center fade-in-text text-white uppercase">
-          <h1 className="text-3xl md:text-4xl mb-2">nenad martic</h1>
+          <h1 className="text-3xl md:text-4xl mb-1">nenad martic</h1>
           <h2 className="text-2xl md:text-3xl">Master of photography</h2>
         </div>
       ) : (
         <div className="text-center text-black uppercase">
-          <h1 className="text-3xl md:text-4xl mb-2">nenad martic</h1>
+          <h1 className="text-3xl md:text-4xl mb-1">nenad martic</h1>
           <h2 className="text-2xl md:text-3xl">Master of photography</h2>
         </div>
       )}
