@@ -1,49 +1,47 @@
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { Image as ImageType } from "@/types/types";
-import { getSlug, makeUrl } from "@/lib/utils";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { X, ArrowLeft, ArrowRight } from "@phosphor-icons/react";
-import { useEffect, useState, useCallback } from "react";
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
+import { Image as ImageType } from '@/types/types'
+import { getSlug, makeUrl } from '@/lib/utils'
+import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
+import { useCallback, useEffect, useState } from 'react'
+import FadeInImage from '@/app/_components/FadeInImage'
+import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Carousel } from 'react-responsive-carousel'
 
-import { useRouter } from "next/navigation";
-import FadeInImage from "@/app/_components/FadeInImage";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { Carousel } from "react-responsive-carousel";
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import BackArrow from "@/app/_components/BackArrow";
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import BackArrow from '@/app/_components/BackArrow'
 
 interface GalleryProps {
-  images: ImageType[];
-  slug: string;
-  isConcept: boolean;
+  images: ImageType[]
+  slug: string
+  isConcept: boolean
 }
 
 export default function Gallery({ images, slug, isConcept }: GalleryProps) {
-  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
-  const [isImageNotFound, setIsImageNotFound] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null)
+  const [isImageNotFound, setIsImageNotFound] = useState(false)
+  const [animationKey, setAnimationKey] = useState(0)
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const imageParam = useSearchParams().get("image");
+  const imageParam = useSearchParams().get('image')
 
   useEffect(() => {
     if (imageParam) {
       const image = images.find(
-        (image) => getSlug(image.fields.title) === imageParam
-      );
+        (image) => getSlug(image.fields.title).trim() === imageParam
+      )
 
       if (!image) {
-        setIsImageNotFound(true);
-        return;
+        setIsImageNotFound(true)
+        return
       }
 
-      setSelectedImage(image);
+      setSelectedImage(image)
     }
-  }, [imageParam, images]);
+  }, [imageParam, images])
 
   const setImageParam = useCallback(
     (title: string) => {
@@ -51,54 +49,54 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
         isConcept
           ? `/portfolio/concept/${slug}?image=${getSlug(title)}`
           : `/portfolio/${slug}?image=${getSlug(title)}`
-      );
+      )
     },
     [router, isConcept, slug]
-  );
+  )
 
   const handlePreviousImage = useCallback(() => {
-    if (!selectedImage) return;
+    if (!selectedImage) return
 
-    setAnimationKey((prevKey) => prevKey + 1);
+    setAnimationKey((prevKey) => prevKey + 1)
 
     if (images.indexOf(selectedImage) === 0) {
-      setSelectedImage(images[images.length - 1]);
-      setImageParam(images[images.length - 1].fields.title);
-      return;
+      setSelectedImage(images[images.length - 1])
+      setImageParam(images[images.length - 1].fields.title)
+      return
     }
 
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1]);
-    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1])
+    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title)
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam])
 
   const handleNextImage = useCallback(() => {
-    if (!selectedImage) return;
+    if (!selectedImage) return
 
-    setAnimationKey((prevKey) => prevKey + 1);
+    setAnimationKey((prevKey) => prevKey + 1)
 
     if (images.indexOf(selectedImage) === images.length - 1) {
-      setSelectedImage(images[0]);
-      setImageParam(images[0].fields.title);
-      return;
+      setSelectedImage(images[0])
+      setImageParam(images[0].fields.title)
+      return
     }
 
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1]);
-    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1])
+    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title)
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") {
-        handlePreviousImage();
-      } else if (event.key === "ArrowRight") {
-        handleNextImage();
+      if (event.key === 'ArrowLeft') {
+        handlePreviousImage()
+      } else if (event.key === 'ArrowRight') {
+        handleNextImage()
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handlePreviousImage, handleNextImage]);
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handlePreviousImage, handleNextImage])
 
   if (isImageNotFound) {
     return (
@@ -112,10 +110,10 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
         >
           <BackArrow />
 
-          <p>Return to {slug.replace("-", " ")}</p>
+          <p>Return to {slug.replace('-', ' ')}</p>
         </Link>
       </>
-    );
+    )
   }
 
   return (
@@ -146,8 +144,8 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
             statusFormatter={(current, total) => `${current} / ${total}`}
             className="md:hidden"
             onChange={(index) => {
-              setSelectedImage(images[index]);
-              setImageParam(images[index].fields.title);
+              setSelectedImage(images[index])
+              setImageParam(images[index].fields.title)
             }}
           >
             {images.map((image, index) => (
@@ -229,5 +227,5 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
         </ResponsiveMasonry>
       )}
     </>
-  );
+  )
 }
