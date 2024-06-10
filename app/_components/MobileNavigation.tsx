@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { List, X } from "@phosphor-icons/react";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-import NavigationItem from "./NavigationItem";
-import { useSearchParams } from "next/navigation";
+import { useState } from 'react';
+import Link from 'next/link';
+import { List, X } from '@phosphor-icons/react';
+import Image from 'next/image';
+
+import { usePathname, useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import NavigationItem from './NavigationItem';
 
 export default function MobileNavigation() {
   const [isNavigationOpen, setIsNavigationOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function MobileNavigation() {
     setIsNavigationOpen(false);
   }
 
-  const imageParam = useSearchParams().get("image");
+  const imageParam = useSearchParams().get('image');
 
   if (imageParam) {
     return null;
@@ -42,6 +42,7 @@ export default function MobileNavigation() {
               alt="logo"
               width={42}
               height={42}
+              priority={true}
             />
           </Link>
 
@@ -58,16 +59,16 @@ export default function MobileNavigation() {
       )}
       <div
         className={cn(
-          "flex justify-between items-center px-4 py-3 z-10",
-          pathname !== "/" && "bg-background"
+          'flex justify-between items-center px-4 py-3 z-10',
+          pathname !== '/' && 'bg-background'
         )}
       >
         <Link href="/">
           <Image
             src={
-              pathname === "/"
-                ? "/images/logo-white.svg"
-                : "/images/logo-black.svg"
+              pathname === '/'
+                ? '/images/logo-white.svg'
+                : '/images/logo-black.svg'
             }
             alt="logo"
             width={42}
@@ -77,7 +78,7 @@ export default function MobileNavigation() {
         <List
           size={42}
           onClick={() => setIsNavigationOpen(true)}
-          color={pathname === "/" ? "white" : "black"}
+          color={pathname === '/' ? 'white' : 'black'}
         />
       </div>
     </header>
