@@ -1,23 +1,24 @@
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { Image as ImageType } from "@/types/types";
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { Image as ImageType } from '@/types/types';
 import {
   getSlug,
   getUrlWithSlug,
   getUrlWithSlugAndImageParam,
   makeUrl,
-} from "@/lib/utils";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, X } from "@phosphor-icons/react";
-import { useCallback, useEffect, useState } from "react";
-import FadeInImage from "@/app/_components/FadeInImage";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { Carousel } from "react-responsive-carousel";
+} from '@/lib/utils';
+import Link from 'next/link';
 
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import BackArrow from "@/app/_components/BackArrow";
-import { CategoryType } from "@/hooks/useCategories";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
+import { useCallback, useEffect, useState } from 'react';
+import FadeInImage from '@/app/_components/FadeInImage';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Carousel } from 'react-responsive-carousel';
+
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import BackArrow from '@/app/_components/BackArrow';
+import { CategoryType } from '@/hooks/useCategories';
 
 interface GalleryProps {
   images: ImageType[];
@@ -32,12 +33,12 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
 
   const router = useRouter();
 
-  const imageParam = useSearchParams().get("image");
+  const imageParam = useSearchParams().get('image');
 
   useEffect(() => {
     if (imageParam) {
       const image = images.find(
-        (image) => getSlug(image.fields.title).trim() === imageParam,
+        (image) => getSlug(image.fields.title).trim() === imageParam
       );
 
       if (!image) {
@@ -53,7 +54,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
     (title: string) => {
       router.replace(getUrlWithSlugAndImageParam(type, slug, title));
     },
-    [router, slug, type],
+    [router, slug, type]
   );
 
   const handlePreviousImage = useCallback(() => {
@@ -88,16 +89,19 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") {
+      if (event.key === 'ArrowLeft') {
         handlePreviousImage();
-      } else if (event.key === "ArrowRight") {
+      } else if (event.key === 'ArrowRight') {
         handleNextImage();
+      } else if (event.key === 'Escape') {
+        router.push(getUrlWithSlug(type, slug));
+        setSelectedImage(null);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
 
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handlePreviousImage, handleNextImage]);
 
   if (isImageNotFound) {
@@ -112,7 +116,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
         >
           <BackArrow />
 
-          <p>Return to {slug.replace("-", " ")}</p>
+          <p>Return to {slug.replace('-', ' ')}</p>
         </Link>
       </>
     );
@@ -181,6 +185,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
                   width={selectedImage.fields.file.details.image.width}
                   height={selectedImage.fields.file.details.image.height}
                   className="max-h-full max-w-full object-contain"
+                  priority={true}
                 />
               </motion.div>
             </AnimatePresence>
@@ -209,7 +214,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
                 href={getUrlWithSlugAndImageParam(
                   type,
                   slug,
-                  image.fields.title,
+                  image.fields.title
                 )}
                 onClick={() => setSelectedImage(image)}
                 className="overflow-hidden"
