@@ -1,16 +1,16 @@
-import useCategories from "@/hooks/useCategories";
-import Link from "next/link";
-import Category from "../_components/Category";
-import { makeUrl } from "@/lib/utils";
-import SectionContainer from "@/app/_components/SectionContainer";
-import BackArrow from "@/app/_components/BackArrow";
+import useCategories from '@/hooks/useCategories'
+import Link from 'next/link'
+import Category from '../_components/Category'
+import { makeUrl } from '@/lib/utils'
+import SectionContainer from '@/app/_components/SectionContainer'
+import BackArrow from '@/app/_components/BackArrow'
 
 export default async function Concept() {
-  const categories = await useCategories({ type: "concept" });
+  const categories = await useCategories({ type: 'concept' })
 
   return (
     <SectionContainer className="pt-4">
-      <div className="grid grid-cols-3 mb-6 md:mb-8">
+      <div className="grid grid-cols-3 mb-8 md:mb-8">
         <Link href="/portfolio">
           <BackArrow />
         </Link>
@@ -31,5 +31,5 @@ export default async function Concept() {
         ))}
       </div>
     </SectionContainer>
-  );
+  )
 }
