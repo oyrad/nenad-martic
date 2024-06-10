@@ -5,7 +5,7 @@ import useCategories from "@/hooks/useCategories";
 import SectionContainer from "../_components/SectionContainer";
 
 export default async function Categories() {
-  const categories = await useCategories({ isConcept: false });
+  const categories = await useCategories({ type: "default" });
 
   return (
     <SectionContainer>
@@ -26,6 +26,12 @@ export default async function Categories() {
           coverImageAlt="concept"
           title="Concept"
           href="/portfolio/concept"
+        />
+        <Category
+          coverImageUrl="/images/concept.webp"
+          coverImageAlt="storytelling"
+          title="Storytelling"
+          href="/portfolio/storytelling"
         />
       </div>
     </SectionContainer>

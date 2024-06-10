@@ -1,32 +1,38 @@
-import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
-import { Image as ImageType } from '@/types/types'
-import { getSlug, makeUrl } from '@/lib/utils'
-import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react'
-import { useCallback, useEffect, useState } from 'react'
-import FadeInImage from '@/app/_components/FadeInImage'
-import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
-import { Carousel } from 'react-responsive-carousel'
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { Image as ImageType } from "@/types/types";
+import {
+  getSlug,
+  getUrlWithSlug,
+  getUrlWithSlugAndImageParam,
+  makeUrl,
+} from "@/lib/utils";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowLeft, ArrowRight, X } from "@phosphor-icons/react";
+import { useCallback, useEffect, useState } from "react";
+import FadeInImage from "@/app/_components/FadeInImage";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { Carousel } from "react-responsive-carousel";
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css'
-import BackArrow from '@/app/_components/BackArrow'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import BackArrow from "@/app/_components/BackArrow";
+import { CategoryType } from "@/hooks/useCategories";
 
 interface GalleryProps {
-  images: ImageType[]
-  slug: string
-  isConcept: boolean
+  images: ImageType[];
+  slug: string;
+  type: CategoryType;
 }
 
-export default function Gallery({ images, slug, isConcept }: GalleryProps) {
-  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null)
-  const [isImageNotFound, setIsImageNotFound] = useState(false)
-  const [animationKey, setAnimationKey] = useState(0)
+export default function Gallery({ images, slug, type }: GalleryProps) {
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
+  const [isImageNotFound, setIsImageNotFound] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const imageParam = useSearchParams().get('image')
+  const imageParam = useSearchParams().get("image");
 
   useEffect(() => {
     if (imageParam) {
@@ -45,58 +51,54 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
 
   const setImageParam = useCallback(
     (title: string) => {
-      router.replace(
-        isConcept
-          ? `/portfolio/concept/${slug}?image=${getSlug(title)}`
-          : `/portfolio/${slug}?image=${getSlug(title)}`
-      )
+      router.replace(getUrlWithSlugAndImageParam(type, slug, title));
     },
-    [router, isConcept, slug]
-  )
+    [router, slug, type],
+  );
 
   const handlePreviousImage = useCallback(() => {
-    if (!selectedImage) return
+    if (!selectedImage) return;
 
-    setAnimationKey((prevKey) => prevKey + 1)
+    setAnimationKey((prevKey) => prevKey + 1);
 
     if (images.indexOf(selectedImage) === 0) {
-      setSelectedImage(images[images.length - 1])
-      setImageParam(images[images.length - 1].fields.title)
-      return
+      setSelectedImage(images[images.length - 1]);
+      setImageParam(images[images.length - 1].fields.title);
+      return;
     }
 
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1])
-    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title)
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam])
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1]);
+    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title);
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
 
   const handleNextImage = useCallback(() => {
-    if (!selectedImage) return
+    if (!selectedImage) return;
 
-    setAnimationKey((prevKey) => prevKey + 1)
+    setAnimationKey((prevKey) => prevKey + 1);
 
     if (images.indexOf(selectedImage) === images.length - 1) {
-      setSelectedImage(images[0])
-      setImageParam(images[0].fields.title)
-      return
+      setSelectedImage(images[0]);
+      setImageParam(images[0].fields.title);
+      return;
     }
 
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1])
-    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title)
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam])
+    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1]);
+    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title);
+  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') {
-        handlePreviousImage()
-      } else if (event.key === 'ArrowRight') {
-        handleNextImage()
+      if (event.key === "ArrowLeft") {
+        handlePreviousImage();
+      } else if (event.key === "ArrowRight") {
+        handleNextImage();
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handlePreviousImage, handleNextImage])
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handlePreviousImage, handleNextImage]);
 
   if (isImageNotFound) {
     return (
@@ -104,16 +106,16 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
         <p className="md:text-xl mb-2 font-light uppercase">Image not found</p>
 
         <Link
-          href={isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`}
+          href={getUrlWithSlug(type, slug)}
           onClick={() => setIsImageNotFound(false)}
           className="flex gap-2 items-center"
         >
           <BackArrow />
 
-          <p>Return to {slug.replace('-', ' ')}</p>
+          <p>Return to {slug.replace("-", " ")}</p>
         </Link>
       </>
-    )
+    );
   }
 
   return (
@@ -121,9 +123,7 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
       {selectedImage && imageParam ? (
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4 items-center gap-4 md:gap-0 md:justify-between">
           <Link
-            href={
-              isConcept ? `/portfolio/concept/${slug}` : `/portfolio/${slug}`
-            }
+            href={getUrlWithSlug(type, slug)}
             className="self-end hover:opacity-75 transition-opacity duration-200"
           >
             <X
@@ -227,5 +227,5 @@ export default function Gallery({ images, slug, isConcept }: GalleryProps) {
         </ResponsiveMasonry>
       )}
     </>
-  )
+  );
 }

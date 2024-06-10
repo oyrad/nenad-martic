@@ -8,7 +8,7 @@ export type CategoryFields = {
   images: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
   description?: EntryFieldTypes.Text;
   slug: EntryFieldTypes.Text;
-  isConcept: EntryFieldTypes.Boolean;
+  type: EntryFieldTypes.Text;
 };
 
 export type CategoryEntrySkeleton = {
@@ -16,14 +16,16 @@ export type CategoryEntrySkeleton = {
   contentTypeId: "category";
 };
 
+export type CategoryType = "default" | "concept" | "storytelling";
+
 interface UseCategoriesOptions {
-  isConcept?: boolean;
+  type: CategoryType;
 }
 
 export default async function useCategories(options: UseCategoriesOptions) {
   const response = await client.getEntries<CategoryEntrySkeleton>({
     content_type: "category",
-    "fields.isConcept": options.isConcept,
+    "fields.type": options.type,
   });
 
   return response.items;

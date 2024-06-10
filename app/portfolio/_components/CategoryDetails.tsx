@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Gallery from "../_components/Gallery";
-import { useParams } from "next/navigation";
-import { CategoryEntrySkeleton } from "@/hooks/useCategories";
+import { useParams, useSearchParams } from "next/navigation";
+import { CategoryEntrySkeleton, CategoryType } from "@/hooks/useCategories";
 import { createClient } from "contentful";
-import { ArrowLeft } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import SectionContainer from "@/app/_components/SectionContainer";
 import BackArrow from "@/app/_components/BackArrow";
+import { getReturnUrlFromCategoryType } from "@/lib/utils";
 
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
@@ -18,12 +17,12 @@ export const client = createClient({
 
 interface CategoryDetailsProps {
   backButtonHref: string;
-  isConcept: boolean;
+  type: CategoryType;
 }
 
 export default function CategoryDetails({
   backButtonHref,
-  isConcept,
+  type,
 }: CategoryDetailsProps) {
   const { slug } = useParams();
   const [categoryDetails, setCategoryDetails] = useState<any>();
@@ -61,7 +60,7 @@ export default function CategoryDetails({
         </p>
 
         <Link
-          href={isConcept ? "/portfolio/concept" : "/portfolio"}
+          href={getReturnUrlFromCategoryType(type)}
           className="flex gap-2 items-center"
         >
           <BackArrow />
@@ -91,7 +90,7 @@ export default function CategoryDetails({
         <Gallery
           images={categoryDetails.images}
           slug={slug as string}
-          isConcept={isConcept}
+          type={type}
         />
       </SectionContainer>
     );

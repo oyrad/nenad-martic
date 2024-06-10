@@ -6,7 +6,7 @@ import SectionContainer from "@/app/_components/SectionContainer";
 import BackArrow from "@/app/_components/BackArrow";
 
 export default async function Concept() {
-  const categories = await useCategories({ type: "concept" });
+  const categories = await useCategories({ type: "storytelling" });
 
   return (
     <SectionContainer className="pt-4">
@@ -26,7 +26,7 @@ export default async function Concept() {
             coverImageAlt={category.fields.coverImage.fields.title}
             title={category.fields.title}
             subtitle={category.fields.subtitle}
-            href={`/portfolio/concept/${category.fields.slug}`}
+            href={`/portfolio/storytelling/${category.fields.slug}`}
           />
         ))}
       </div>
