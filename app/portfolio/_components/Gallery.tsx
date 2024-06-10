@@ -37,17 +37,17 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
   useEffect(() => {
     if (imageParam) {
       const image = images.find(
-        (image) => getSlug(image.fields.title).trim() === imageParam
-      )
+        (image) => getSlug(image.fields.title).trim() === imageParam,
+      );
 
       if (!image) {
-        setIsImageNotFound(true)
-        return
+        setIsImageNotFound(true);
+        return;
       }
 
-      setSelectedImage(image)
+      setSelectedImage(image);
     }
-  }, [imageParam, images])
+  }, [imageParam, images]);
 
   const setImageParam = useCallback(
     (title: string) => {
@@ -144,8 +144,8 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
             statusFormatter={(current, total) => `${current} / ${total}`}
             className="md:hidden"
             onChange={(index) => {
-              setSelectedImage(images[index])
-              setImageParam(images[index].fields.title)
+              setSelectedImage(images[index]);
+              setImageParam(images[index].fields.title);
             }}
           >
             {images.map((image, index) => (
@@ -206,13 +206,11 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
             {images.map((image, index) => (
               <Link
                 key={index}
-                href={
-                  isConcept
-                    ? `/portfolio/concept/${slug}?image=${getSlug(
-                        image.fields.title
-                      )}`
-                    : `/portfolio/${slug}?image=${getSlug(image.fields.title)}`
-                }
+                href={getUrlWithSlugAndImageParam(
+                  type,
+                  slug,
+                  image.fields.title,
+                )}
                 onClick={() => setSelectedImage(image)}
                 className="overflow-hidden"
               >
