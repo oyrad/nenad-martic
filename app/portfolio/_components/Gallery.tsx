@@ -188,13 +188,6 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
                 className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
               >
                 {prefetchedImages[selectedImage.fields.title]}
-                {/* <Image
-                  src={makeUrl(selectedImage.fields.file.url)}
-                  alt={selectedImage.fields.title}
-                  width={selectedImage.fields.file.details.image.width}
-                  height={selectedImage.fields.file.details.image.height}
-                  className="max-h-full max-w-full object-contain"
-                />*/}
               </motion.div>
             </AnimatePresence>
 
