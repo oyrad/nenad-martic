@@ -10,15 +10,15 @@ import Link from 'next/link';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import FadeInImage from '@/app/_components/FadeInImage';
 import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Carousel } from 'react-responsive-carousel';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import BackArrow from '@/app/_components/BackArrow';
 import { CategoryType } from '@/hooks/useCategories';
+import NotFound from '@/app/_components/NotFound';
 
 interface GalleryProps {
   images: ImageType[];
@@ -30,9 +30,11 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isImageNotFound, setIsImageNotFound] = useState(false);
   const [animationKey, setAnimationKey] = useState(0);
+  const [prefetchedImages, setPrefetchedImages] = useState<
+    Record<string, ReactNode>
+  >({});
 
   const router = useRouter();
-
   const imageParam = useSearchParams().get('image');
 
   useEffect(() => {
@@ -49,6 +51,24 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
       setSelectedImage(image);
     }
   }, [imageParam, images]);
+
+  useEffect(() => {
+    const imageComponents: Record<string, ReactNode> = {};
+    images.forEach((image) => {
+      const url = makeUrl(image.fields.file.url);
+      imageComponents[image.fields.title] = (
+        <Image
+          src={url}
+          alt={image.fields.title}
+          width={image.fields.file.details.image.width}
+          height={image.fields.file.details.image.height}
+          className="md:max-h-full md:max-w-full md:object-contain"
+        />
+      );
+    });
+
+    setPrefetchedImages(imageComponents);
+  }, [images]);
 
   const setImageParam = useCallback(
     (title: string) => {
@@ -102,25 +122,20 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
     window.addEventListener('keydown', handleKeyDown);
 
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handlePreviousImage, handleNextImage]);
+  }, [handlePreviousImage, handleNextImage, router, type, slug]);
 
   if (isImageNotFound) {
     return (
-      <>
-        <p className="md:text-xl mb-2 font-light uppercase">Image not found</p>
-
-        <Link
-          href={getUrlWithSlug(type, slug)}
-          onClick={() => setIsImageNotFound(false)}
-          className="flex gap-2 items-center"
-        >
-          <BackArrow />
-
-          <p>Return to {slug.replace('-', ' ')}</p>
-        </Link>
-      </>
+      <NotFound
+        text="Image not found"
+        slug={slug}
+        type={type}
+        setIsImageNotFound={setIsImageNotFound}
+      />
     );
   }
+
+  console.log(prefetchedImages[selectedImage?.fields.title!]);
 
   return (
     <>
@@ -153,14 +168,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
             }}
           >
             {images.map((image, index) => (
-              <div key={index}>
-                <Image
-                  src={makeUrl(image.fields.file.url)}
-                  alt={image.fields.title}
-                  width={image.fields.file.details.image.width}
-                  height={image.fields.file.details.image.height}
-                />
-              </div>
+              <div key={index}>{prefetchedImages[image.fields.title]}</div>
             ))}
           </Carousel>
 
@@ -179,14 +187,14 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
                 transition={{ duration: 0.25 }}
                 className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
               >
-                <Image
+                {prefetchedImages[selectedImage.fields.title]}
+                {/* <Image
                   src={makeUrl(selectedImage.fields.file.url)}
                   alt={selectedImage.fields.title}
                   width={selectedImage.fields.file.details.image.width}
                   height={selectedImage.fields.file.details.image.height}
                   className="max-h-full max-w-full object-contain"
-                  priority={true}
-                />
+                />*/}
               </motion.div>
             </AnimatePresence>
 

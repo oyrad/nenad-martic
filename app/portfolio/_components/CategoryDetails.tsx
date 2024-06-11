@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Gallery from "../_components/Gallery";
-import { useParams, useSearchParams } from "next/navigation";
-import { CategoryEntrySkeleton, CategoryType } from "@/hooks/useCategories";
-import { createClient } from "contentful";
-import Link from "next/link";
-import SectionContainer from "@/app/_components/SectionContainer";
-import BackArrow from "@/app/_components/BackArrow";
-import { getReturnUrlFromCategoryType } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import Gallery from '../_components/Gallery';
+import { useParams, useSearchParams } from 'next/navigation';
+import { CategoryEntrySkeleton, CategoryType } from '@/hooks/useCategories';
+import { createClient } from 'contentful';
+import Link from 'next/link';
+import SectionContainer from '@/app/_components/SectionContainer';
+import BackArrow from '@/app/_components/BackArrow';
+import { getReturnUrlFromCategoryType } from '@/lib/utils';
 
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
@@ -28,7 +28,7 @@ export default function CategoryDetails({
   const [categoryDetails, setCategoryDetails] = useState<any>();
   const [isCategoryNotFound, setIsCategoryNotFound] = useState(false);
 
-  const imageParam = useSearchParams().get("image");
+  const imageParam = useSearchParams().get('image');
 
   useEffect(() => {
     async function getCategoryDetails() {
@@ -37,8 +37,8 @@ export default function CategoryDetails({
       }
 
       const response = await client.getEntries<CategoryEntrySkeleton>({
-        content_type: "category",
-        "fields.slug": slug as string,
+        content_type: 'category',
+        'fields.slug': slug as string,
       });
 
       if (!response.items.length) {
