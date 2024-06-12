@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface FadeInImageProps {
   src: string;
@@ -12,7 +12,7 @@ interface FadeInImageProps {
 export default function FadeInImage({
   src,
   alt,
-  className = "",
+  className = '',
 }: FadeInImageProps) {
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -32,7 +32,7 @@ export default function FadeInImage({
       ref={imgRef}
       src={src}
       alt={alt}
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0, zIndex: -1 }}
       animate={{ opacity: loaded ? 1 : 0 }}
       transition={{ duration: 0.5 }}
       onLoad={handleImageLoad}
