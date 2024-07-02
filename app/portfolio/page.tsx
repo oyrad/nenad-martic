@@ -1,11 +1,11 @@
-import Title from '../_components/Title'
-import { makeUrl } from '@/lib/utils'
-import Category from './_components/Category'
-import useCategories from '@/hooks/useCategories'
-import SectionContainer from '../_components/SectionContainer'
+import Title from '../_components/Title';
+import { makeUrl } from '@/lib/utils';
+import Category from './_components/Category';
+import useCategories from '@/hooks/useCategories';
+import SectionContainer from '../_components/SectionContainer';
 
 export default async function Categories() {
-  const categories = await useCategories({ type: 'default' })
+  const categories = await useCategories({ type: 'default' });
 
   return (
     <SectionContainer>
@@ -28,12 +28,12 @@ export default async function Categories() {
           href="/portfolio/concept"
         />
         <Category
-          coverImageUrl="/images/concept.webp"
+          coverImageUrl="/images/storytelling.webp"
           coverImageAlt="storytelling"
           title="Storytelling"
           href="/portfolio/storytelling"
         />
       </div>
     </SectionContainer>
-  )
+  );
 }
