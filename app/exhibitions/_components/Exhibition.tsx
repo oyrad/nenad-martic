@@ -24,7 +24,7 @@ export default function Exhibition({
         </div>
         <p className="text-lg font-light leading-6 mb-2">{description}</p>
         {images.length > 0 && (
-          <div className="grid grid-cols-3 gap-1">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             {images.map((image, index) => (
               <FadeInImage
                 key={index}
@@ -39,18 +39,19 @@ export default function Exhibition({
         <p className="text-crimson font-medium text-2xl">{year}</p>
         <div>
           <p className="text-2xl mb-4">{name}</p>
-          <p className="text-lg font-light leading-6 mb-4">{description}</p>
-          {images.length > 0 && (
-            <div className="grid grid-cols-3 gap-1">
-              {images.map((image, index) => (
-                <FadeInImage
-                  key={index}
-                  src={makeUrl(image.fields.file.url)}
-                  alt={name}
-                />
-              ))}
-            </div>
-          )}
+          <div className="flex flex-col md:flex-row-reverse md:justify-end gap-4">
+            <p className="text-lg font-light leading-6 mb-4 md:w-1/2">
+              {description}
+            </p>
+            {images.map((image, index) => (
+              <FadeInImage
+                key={index}
+                src={makeUrl(image.fields.file.url)}
+                alt={name}
+                className="md:w-1/4"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </>

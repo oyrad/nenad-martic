@@ -50,7 +50,6 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
 
   const setImageParam = useCallback(
     (title: string) => {
-      console.log(title);
       router.replace(
         getUrlWithSlugAndImageParam(type, slug, title.replace('&', '%26'))
       );

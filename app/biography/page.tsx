@@ -1,7 +1,7 @@
-import Title from "../_components/Title";
-import AwardList from "./_components/AwardList";
-import FadeInImage from "../_components/FadeInImage";
-import SectionContainer from "../_components/SectionContainer";
+import Title from '../_components/Title';
+import AwardList from './_components/AwardList';
+import FadeInImage from '../_components/FadeInImage';
+import SectionContainer from '../_components/SectionContainer';
 
 export default function Biography() {
   return (
@@ -29,7 +29,7 @@ export default function Biography() {
         his competitive activity began. He has won numerous awards in both
         domestic and international competitions. Only in competitions under the
         patronage of FIAP (Fédération Internationale de l&apos;Art
-        Photographique), he has over{" "}
+        Photographique), he has over{' '}
         <span className="font-normal">
           1300 accepted works and more than 230 awarded ones
         </span>

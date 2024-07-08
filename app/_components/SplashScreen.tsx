@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface SplashScreenProps {
   fadeOut: boolean;
@@ -20,8 +20,8 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
   return (
     <div
       className={cn(
-        "fixed top-0 h-screen w-screen bg-black z-50 flex flex-col justify-center items-center",
-        fadeOut && "fadeOut"
+        'fixed top-0 h-screen w-screen bg-black z-50 flex flex-col justify-center items-center',
+        fadeOut && 'fadeOut'
       )}
     >
       <Image
@@ -30,6 +30,7 @@ export default function SplashScreen({ fadeOut }: SplashScreenProps) {
         width={150}
         height={150}
         className="fade-in-logo mb-4"
+        priority={true}
       />
       {shouldTextBeShown ? (
         <div className="text-center fade-in-text text-white uppercase">
