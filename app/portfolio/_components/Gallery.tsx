@@ -9,16 +9,15 @@ import {
 import Link from 'next/link';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ArrowLeft, ArrowRight, X } from '@phosphor-icons/react';
+import { X } from '@phosphor-icons/react';
 import { useCallback, useEffect, useState } from 'react';
 import FadeInImage from '@/app/_components/FadeInImage';
-import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { Carousel } from 'react-responsive-carousel';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { CategoryType } from '@/hooks/useCategories';
 import NotFound from '@/app/_components/NotFound';
+import MobileGallery from '@/app/portfolio/_components/MobileGallery';
+import DesktopGallery from '@/app/portfolio/_components/DesktopGallery';
 
 interface GalleryProps {
   images: ImageType[];
@@ -29,7 +28,6 @@ interface GalleryProps {
 export default function Gallery({ images, slug, type }: GalleryProps) {
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [isImageNotFound, setIsImageNotFound] = useState(false);
-  const [animationKey, setAnimationKey] = useState(0);
 
   const router = useRouter();
   const imageParam = useSearchParams().get('image');
@@ -55,53 +53,6 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
     },
     [router, slug, type]
   );
-
-  const handlePreviousImage = useCallback(() => {
-    if (!selectedImage) return;
-
-    setAnimationKey((prevKey) => prevKey + 1);
-
-    if (images.indexOf(selectedImage) === 0) {
-      setSelectedImage(images[images.length - 1]);
-      setImageParam(images[images.length - 1].fields.title);
-      return;
-    }
-
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) - 1]);
-    setImageParam(images[images.indexOf(selectedImage) - 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
-
-  const handleNextImage = useCallback(() => {
-    if (!selectedImage) return;
-
-    setAnimationKey((prevKey) => prevKey + 1);
-
-    if (images.indexOf(selectedImage) === images.length - 1) {
-      setSelectedImage(images[0]);
-      setImageParam(images[0].fields.title);
-      return;
-    }
-
-    setSelectedImage((prevImage) => images[images.indexOf(prevImage!) + 1]);
-    setImageParam(images[images.indexOf(selectedImage) + 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowLeft') {
-        handlePreviousImage();
-      } else if (event.key === 'ArrowRight') {
-        handleNextImage();
-      } else if (event.key === 'Escape') {
-        router.push(getUrlWithSlug(type, slug));
-        setSelectedImage(null);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handlePreviousImage, handleNextImage, router, type, slug]);
 
   if (isImageNotFound) {
     return (
@@ -129,65 +80,21 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
             />
           </Link>
 
-          <Carousel
-            dynamicHeight
-            infiniteLoop
-            selectedItem={images.indexOf(selectedImage)}
-            useKeyboardArrows
-            showThumbs={false}
-            showArrows={false}
-            showIndicators={false}
-            statusFormatter={(current, total) => `${current} / ${total}`}
-            className="md:hidden"
-            onChange={(index) => {
-              setSelectedImage(images[index]);
-              setImageParam(images[index].fields.title);
-            }}
-          >
-            {images.map((image, index) => (
-              <div key={index}>
-                <Image
-                  src={makeUrl(image.fields.file.url)}
-                  alt={image.fields.title}
-                  width={image.fields.file.details.image.width}
-                  height={image.fields.file.details.image.height}
-                />
-              </div>
-            ))}
-          </Carousel>
+          <MobileGallery
+            images={images}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
+            setImageParam={setImageParam}
+          />
 
-          <div className="justify-between items-center flex-grow w-full overflow-hidden hidden md:flex">
-            <ArrowLeft
-              size={40}
-              className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-              onClick={handlePreviousImage}
-            />
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={animationKey}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
-                className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
-              >
-                <Image
-                  src={makeUrl(selectedImage.fields.file.url)}
-                  alt={selectedImage.fields.title}
-                  width={selectedImage.fields.file.details.image.width}
-                  height={selectedImage.fields.file.details.image.height}
-                  className="max-h-full max-w-full object-contain"
-                  priority={true}
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            <ArrowRight
-              size={40}
-              className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-              onClick={handleNextImage}
-            />
-          </div>
+          <DesktopGallery
+            images={images}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
+            setImageParam={setImageParam}
+            type={type}
+            slug={slug}
+          />
 
           <p className="text-center text-xl md:text-2xl font-light md:mb-2">
             {selectedImage?.fields.title}

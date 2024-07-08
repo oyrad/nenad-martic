@@ -9,9 +9,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    formats: ['image/webp'],
   },
-  swcMinify: true,
 };
 
 module.exports = nextConfig;

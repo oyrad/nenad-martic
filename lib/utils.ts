@@ -1,6 +1,6 @@
-import { ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { CategoryType } from "@/hooks/useCategories";
+import { ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+import { CategoryType } from '@/hooks/useCategories';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -11,17 +11,17 @@ export function makeUrl(path: string) {
 }
 
 export function getSlug(title: string) {
-  return title.toLowerCase().replace(" ", "-");
+  return title.toLowerCase().replace(' ', '-');
 }
 
 export function getReturnUrlFromCategoryType(type: CategoryType) {
   switch (type) {
-    case "concept":
-      return "/portfolio/concept";
-    case "storytelling":
-      return "/portfolio/storytelling";
+    case 'concept':
+      return '/portfolio/concept';
+    case 'storytelling':
+      return '/portfolio/storytelling';
     default:
-      return "/portfolio";
+      return '/portfolio';
   }
 }
 
@@ -32,7 +32,7 @@ export function getUrlWithSlug(type: CategoryType, slug: string) {
 export function getUrlWithSlugAndImageParam(
   type: CategoryType,
   slug: string,
-  image: string,
+  image: string
 ) {
   return `${getUrlWithSlug(type, slug)}?image=${getSlug(image)}`;
 }
