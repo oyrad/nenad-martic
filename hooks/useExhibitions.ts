@@ -1,5 +1,5 @@
-import { client } from "@/contentful";
-import { EntryFieldTypes } from "contentful";
+import { client } from '@/contentful';
+import { EntryFieldTypes } from 'contentful';
 
 type ExhibitionFields = {
   name: EntryFieldTypes.Text;
@@ -11,10 +11,10 @@ type ExhibitionFields = {
 
 export type ExhibitionEntrySkeleton = {
   fields: ExhibitionFields;
-  contentTypeId: "exhibition";
+  contentTypeId: 'exhibition';
 };
 
-export type Status = "upcoming" | "previous";
+export type Status = 'upcoming' | 'previous';
 
 interface UseExhibitionsOptions {
   status: Status;
@@ -22,9 +22,9 @@ interface UseExhibitionsOptions {
 
 export default async function useExhibitions(options: UseExhibitionsOptions) {
   const response = await client.getEntries<ExhibitionEntrySkeleton>({
-    content_type: "exhibition",
-    "fields.status": options.status,
+    content_type: 'exhibition',
+    'fields.status': options.status,
   });
 
-  return response.items;
+  return response.items.sort((a, b) => b.fields.year - a.fields.year);
 }
