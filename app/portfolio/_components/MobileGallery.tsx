@@ -23,7 +23,8 @@ export default function MobileGallery({
       selectedItem={images.indexOf(selectedImage)}
       useKeyboardArrows={false}
       showThumbs={false}
-      showArrows={false}
+      showArrows={true}
+      swipeable={false}
       showIndicators={false}
       statusFormatter={(current, total) => `${current} / ${total}`}
       className="md:hidden"

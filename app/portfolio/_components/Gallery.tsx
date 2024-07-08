@@ -35,7 +35,8 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
   useEffect(() => {
     if (imageParam) {
       const image = images.find(
-        (image) => getSlug(image.fields.title).trim() === imageParam
+        (image) =>
+          getSlug(image.fields.title.replace('%26', '&')).trim() === imageParam
       );
 
       if (!image) {
@@ -49,7 +50,10 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
 
   const setImageParam = useCallback(
     (title: string) => {
-      router.replace(getUrlWithSlugAndImageParam(type, slug, title));
+      console.log(title);
+      router.replace(
+        getUrlWithSlugAndImageParam(type, slug, title.replace('&', '%26'))
+      );
     },
     [router, slug, type]
   );
@@ -97,7 +101,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
           />
 
           <p className="text-center text-xl md:text-2xl font-light md:mb-2">
-            {selectedImage?.fields.title}
+            {selectedImage?.fields.title.replace('%26', '&')}
           </p>
 
           <p className="text-center md:text-lg text-gray-500 hidden md:block">

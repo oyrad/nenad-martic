@@ -49,7 +49,7 @@ export default function CategoryDetails({
       setCategoryDetails(response.items[0].fields);
     }
 
-    getCategoryDetails();
+    void getCategoryDetails();
   }, [slug]);
 
   if (isCategoryNotFound) {
