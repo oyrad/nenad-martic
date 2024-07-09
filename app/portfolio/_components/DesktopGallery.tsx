@@ -6,6 +6,7 @@ import { Image as ImageType } from '@/types/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CategoryType } from '@/hooks/useCategories';
+import Loader from '@/app/_components/Loader';
 
 interface DesktopGalleryProps {
   images: ImageType[];
@@ -25,6 +26,7 @@ export default function DesktopGallery({
   type,
 }: DesktopGalleryProps) {
   const [animationKey, setAnimationKey] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   const handlePreviousImage = useCallback(() => {
@@ -85,38 +87,58 @@ export default function DesktopGallery({
     setSelectedImage,
   ]);
 
+  useEffect(() => {
+    Promise.all(
+      Array.from(document.images)
+        .filter((img) => !img.complete)
+        .map(
+          (img) =>
+            new Promise((resolve) => {
+              img.onload = img.onerror = resolve;
+            })
+        )
+    ).then(() => setIsLoading(false));
+  }, []);
+
   return (
     <div className="justify-between items-center flex-grow w-full overflow-hidden hidden md:flex">
-      <ArrowLeft
-        size={40}
-        className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-        onClick={handlePreviousImage}
-      />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={animationKey}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
-        >
-          <Image
-            src={makeUrl(selectedImage.fields.file.url)}
-            alt={selectedImage.fields.title}
-            width={selectedImage.fields.file.details.image.width}
-            height={selectedImage.fields.file.details.image.height}
-            className="max-h-full max-w-full object-contain"
-            priority={true}
+      {isLoading ? (
+        <div className="flex justify-center items-center w-full h-full">
+          <Loader />
+        </div>
+      ) : (
+        <>
+          <ArrowLeft
+            size={40}
+            className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration=200"
+            onClick={handlePreviousImage}
           />
-        </motion.div>
-      </AnimatePresence>
-
-      <ArrowRight
-        size={40}
-        className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200"
-        onClick={handleNextImage}
-      />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={animationKey}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
+            >
+              <Image
+                src={makeUrl(selectedImage.fields.file.url)}
+                alt={selectedImage.fields.title}
+                width={selectedImage.fields.file.details.image.width}
+                height={selectedImage.fields.file.details.image.height}
+                className="max-h-full max-w-full object-contain"
+                priority={true}
+              />
+            </motion.div>
+          </AnimatePresence>
+          <ArrowRight
+            size={40}
+            className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration=200"
+            onClick={handleNextImage}
+          />
+        </>
+      )}
     </div>
   );
 }
