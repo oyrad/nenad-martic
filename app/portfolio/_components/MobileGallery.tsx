@@ -3,6 +3,8 @@ import ReactImageGallery from 'react-image-gallery';
 import { makeUrl } from '@/lib/utils';
 import React from 'react';
 
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 interface MobileGalleryProps {
   images: ImageType[];
   selectedImage: ImageType;
@@ -33,7 +35,6 @@ export default function MobileGallery({
         setImageParam(images[index].fields.title);
       }}
       additionalClass="md:hidden"
-      onBeforeSlide={() => console.log('before slide')}
       slideDuration={200}
     />
     /*<Carousel
