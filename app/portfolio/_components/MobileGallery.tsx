@@ -3,7 +3,7 @@ import ReactImageGallery from 'react-image-gallery';
 import { makeUrl } from '@/lib/utils';
 import React from 'react';
 
-import './../../../node_modules/react-image-gallery/styles/css/image-gallery.css';
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 interface MobileGalleryProps {
   images: ImageType[];

@@ -13,7 +13,6 @@ import { X } from '@phosphor-icons/react';
 import { useCallback, useEffect, useState } from 'react';
 import FadeInImage from '@/app/_components/FadeInImage';
 
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { CategoryType } from '@/hooks/useCategories';
 import NotFound from '@/app/_components/NotFound';
 import MobileGallery from '@/app/portfolio/_components/MobileGallery';
