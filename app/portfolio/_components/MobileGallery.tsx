@@ -1,7 +1,7 @@
-import { Carousel } from 'react-responsive-carousel';
-import Image from 'next/image';
-import { makeUrl } from '@/lib/utils';
 import { Image as ImageType } from '@/types/types';
+import ReactImageGallery from 'react-image-gallery';
+import { makeUrl } from '@/lib/utils';
+import React from 'react';
 
 interface MobileGalleryProps {
   images: ImageType[];
@@ -17,7 +17,26 @@ export default function MobileGallery({
   setImageParam,
 }: MobileGalleryProps) {
   return (
-    <Carousel
+    <ReactImageGallery
+      items={images.map((image) => ({
+        original: makeUrl(image.fields.file.url),
+        originalAlt: image.fields.title,
+        loading: 'eager',
+      }))}
+      showThumbnails={false}
+      showPlayButton={false}
+      showFullscreenButton={false}
+      showIndex={true}
+      startIndex={images.indexOf(selectedImage)}
+      onSlide={(index) => {
+        setSelectedImage(images[index]);
+        setImageParam(images[index].fields.title);
+      }}
+      additionalClass="md:hidden"
+      onBeforeSlide={() => console.log('before slide')}
+      slideDuration={200}
+    />
+    /*<Carousel
       dynamicHeight
       infiniteLoop
       selectedItem={images.indexOf(selectedImage)}
@@ -44,6 +63,6 @@ export default function MobileGallery({
           />
         </div>
       ))}
-    </Carousel>
+    </Carousel>*/
   );
 }
