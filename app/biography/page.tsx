@@ -15,16 +15,16 @@ export default function Biography() {
       <FadeInImage
         src="/images/biography-desktop.webp"
         alt="biography"
-        className="hidden md:block"
+        className="hidden md:block mb-2"
       />
-      <p className="font-light">
+      <p className="font-light md:text-lg">
         Nenad Martić was born and educated in Zagreb. He graduated from the
         Faculty of Education in Zagreb, majoring in Fine Arts. At the beginning
         of his rich career, he worked as an illustrator, and since 1990, he has
         run his own graphic design studio. Parallel to his professional career
         as a designer, he has shown great interest in photography.
       </p>
-      <p className="font-light">
+      <p className="font-light md:text-lg">
         In 2013, he joined the Zagreb Photographic Society, and shortly after,
         his competitive activity began. He has won numerous awards in both
         domestic and international competitions. Only in competitions under the
@@ -35,12 +35,12 @@ export default function Biography() {
         </span>
         .
       </p>
-      <p className="font-light">
+      <p className="font-light md:text-lg">
         He exhibits in numerous exhibitions both nationally and internationally.
         This is his eighth solo exhibition in domestic galleries. He lives and
         works in Zagreb.
       </p>
-      <p className="font-light">
+      <p className="font-light md:text-lg">
         Among significant achievements, following stand out:
       </p>
       <AwardList />
