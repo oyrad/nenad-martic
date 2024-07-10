@@ -1,48 +1,50 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-  background-color: #f6f2ec;
+    background-color: #f6f2ec;
 }
 
 #cover-video {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: left;
-  z-index: -1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left;
+    z-index: -1;
 }
 
 .fade-in {
-  animation: fadeIn 200ms ease-in-out;
+    animation: fadeIn 200ms ease-in-out;
 }
 
 .fade-in-logo {
-  animation: fadeIn 1000ms ease-in-out;
+    animation: fadeIn 1000ms ease-in-out;
 }
 
 .fade-in-text {
-  animation: fadeIn 500ms ease-in-out;
+    animation: fadeIn 500ms ease-in-out;
 }
 
 @keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .fadeOut {
-  transition: opacity 500ms ease-out;
-  opacity: 0;
+    transition: opacity 500ms ease-out;
+    opacity: 0;
 }
