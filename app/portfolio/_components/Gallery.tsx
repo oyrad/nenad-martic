@@ -18,6 +18,8 @@ import NotFound from '@/app/_components/NotFound';
 import MobileGallery from '@/app/portfolio/_components/MobileGallery';
 import DesktopGallery from '@/app/portfolio/_components/DesktopGallery';
 
+import 'react-image-gallery/styles/css/image-gallery.css';
+
 interface GalleryProps {
   images: ImageType[];
   slug: string;
@@ -73,7 +75,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
         <div className="fixed top-0 left-0 h-full w-full bg-background flex flex-col p-4 items-center gap-4 md:gap-0 md:justify-between">
           <Link
             href={getUrlWithSlug(type, slug)}
-            className="self-end hover:opacity-75 transition-opacity duration-200"
+            className="self-end hover:opacity-75 transition-opacity duration-200 mb-2"
           >
             <X
               size={32}
@@ -98,7 +100,7 @@ export default function Gallery({ images, slug, type }: GalleryProps) {
             slug={slug}
           />
 
-          <p className="text-center text-xl md:text-2xl font-light md:mb-2">
+          <p className="text-center text-xl md:text-2xl font-light md:mb-2 md:pt-4">
             {selectedImage?.fields.title.replace('%26', '&')}
           </p>
 

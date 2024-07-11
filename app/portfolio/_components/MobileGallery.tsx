@@ -3,8 +3,6 @@ import ReactImageGallery from 'react-image-gallery';
 import { makeUrl } from '@/lib/utils';
 import React from 'react';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
-
 interface MobileGalleryProps {
   images: ImageType[];
   selectedImage: ImageType;
@@ -34,36 +32,9 @@ export default function MobileGallery({
         setSelectedImage(images[index]);
         setImageParam(images[index].fields.title);
       }}
+      onBeforeSlide={(index) => console.log(index)}
       additionalClass="md:hidden"
       slideDuration={200}
     />
-    /*<Carousel
-      dynamicHeight
-      infiniteLoop
-      selectedItem={images.indexOf(selectedImage)}
-      useKeyboardArrows={false}
-      showThumbs={false}
-      showArrows={true}
-      swipeable={false}
-      showIndicators={false}
-      statusFormatter={(current, total) => `${current} / ${total}`}
-      className="md:hidden"
-      onChange={(index) => {
-        setSelectedImage(images[index]);
-        setImageParam(images[index].fields.title);
-      }}
-    >
-      {images.map((image, index) => (
-        <div key={index}>
-          <Image
-            src={makeUrl(image.fields.file.url)}
-            alt={image.fields.title}
-            width={image.fields.file.details.image.width}
-            height={image.fields.file.details.image.height}
-            priority={true}
-          />
-        </div>
-      ))}
-    </Carousel>*/
   );
 }

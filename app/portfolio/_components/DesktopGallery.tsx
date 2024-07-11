@@ -1,12 +1,10 @@
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { getUrlWithSlug, makeUrl } from '@/lib/utils';
 import { Image as ImageType } from '@/types/types';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { CategoryType } from '@/hooks/useCategories';
-import Loader from '@/app/_components/Loader';
+import ReactImageGallery from 'react-image-gallery';
 
 interface DesktopGalleryProps {
   images: ImageType[];
@@ -25,14 +23,10 @@ export default function DesktopGallery({
   slug,
   type,
 }: DesktopGalleryProps) {
-  const [animationKey, setAnimationKey] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   const handlePreviousImage = useCallback(() => {
     if (!selectedImage) return;
-
-    setAnimationKey((prevKey) => prevKey + 1);
 
     if (images.indexOf(selectedImage) === 0) {
       setSelectedImage(images[images.length - 1]);
@@ -44,12 +38,10 @@ export default function DesktopGallery({
       (prevImage: ImageType) => images[images.indexOf(prevImage!) - 1]
     );
     setImageParam(images[images.indexOf(selectedImage) - 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+  }, [selectedImage, images, setSelectedImage, setImageParam]);
 
   const handleNextImage = useCallback(() => {
     if (!selectedImage) return;
-
-    setAnimationKey((prevKey) => prevKey + 1);
 
     if (images.indexOf(selectedImage) === images.length - 1) {
       setSelectedImage(images[0]);
@@ -61,7 +53,7 @@ export default function DesktopGallery({
       (prevImage: ImageType) => images[images.indexOf(prevImage!) + 1]
     );
     setImageParam(images[images.indexOf(selectedImage) + 1].fields.title);
-  }, [selectedImage, images, setAnimationKey, setSelectedImage, setImageParam]);
+  }, [selectedImage, images, setSelectedImage, setImageParam]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -87,58 +79,37 @@ export default function DesktopGallery({
     setSelectedImage,
   ]);
 
-  useEffect(() => {
-    Promise.all(
-      Array.from(document.images)
-        .filter((img) => !img.complete)
-        .map(
-          (img) =>
-            new Promise((resolve) => {
-              img.onload = img.onerror = resolve;
-            })
-        )
-    ).then(() => setIsLoading(false));
-  }, []);
-
   return (
-    <div className="justify-between items-center flex-grow w-full overflow-hidden hidden md:flex">
-      {isLoading ? (
-        <div className="flex justify-center items-center w-full h-full">
-          <Loader />
-        </div>
-      ) : (
-        <>
-          <ArrowLeft
-            size={40}
-            className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration=200"
-            onClick={handlePreviousImage}
-          />
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={animationKey}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="relative h-full w-full flex justify-center items-center overflow-hidden p-4"
-            >
-              <Image
-                src={makeUrl(selectedImage.fields.file.url)}
-                alt={selectedImage.fields.title}
-                width={selectedImage.fields.file.details.image.width}
-                height={selectedImage.fields.file.details.image.height}
-                className="max-h-full max-w-full object-contain"
-                priority={true}
-              />
-            </motion.div>
-          </AnimatePresence>
-          <ArrowRight
-            size={40}
-            className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration=200"
-            onClick={handleNextImage}
-          />
-        </>
-      )}
+    <div className="justify-between items-center flex-grow overflow-hidden w-full hidden md:flex gap-8">
+      <ArrowLeft
+        size={40}
+        className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200 min-w-12 max-w-12"
+        onClick={handlePreviousImage}
+      />
+      <ReactImageGallery
+        items={images.map((image) => ({
+          original: makeUrl(image.fields.file.url),
+          originalAlt: image.fields.title,
+          loading: 'eager',
+        }))}
+        showThumbnails={false}
+        showPlayButton={false}
+        showFullscreenButton={false}
+        showIndex={false}
+        showNav={false}
+        startIndex={images.indexOf(selectedImage)}
+        additionalClass="cursor-auto"
+        onSlide={(index) => {
+          setSelectedImage(images[index]);
+          setImageParam(images[index].fields.title);
+        }}
+        slideDuration={200}
+      />
+      <ArrowRight
+        size={40}
+        className="cursor-pointer hidden md:block hover:opacity-75 transition-opacity duration-200 min-w-12 max-w-12"
+        onClick={handleNextImage}
+      />
     </div>
   );
 }
