@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import SplashScreen from "./_components/SplashScreen";
+import { useEffect, useState } from 'react';
+import SplashScreen from './_components/SplashScreen';
 
 export default function Home() {
   const [isTimeoutDone, setIsTimeoutDone] = useState(false);
@@ -13,7 +13,7 @@ export default function Home() {
       setTimeout(() => {
         setIsTimeoutDone(true);
       }, 500);
-    }, 2000);
+    }, 2250);
 
     return () => clearTimeout(timer);
   }, []);
