@@ -3,17 +3,32 @@
 import { useEffect, useState } from 'react';
 import Gallery from '../_components/Gallery';
 import { useParams, useSearchParams } from 'next/navigation';
-import { CategoryEntrySkeleton, CategoryType } from '@/hooks/useCategories';
-import { createClient } from 'contentful';
+import { createClient, EntryFieldTypes } from 'contentful';
 import Link from 'next/link';
 import SectionContainer from '@/app/_components/SectionContainer';
 import BackArrow from '@/app/_components/BackArrow';
 import { getReturnUrlFromCategoryType } from '@/lib/utils';
+import { CategoryType } from '@/types/types';
 
 export const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID!,
   accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN!,
 });
+
+interface CategoryFields {
+  title: EntryFieldTypes.Text;
+  subtitle: EntryFieldTypes.Text;
+  coverImage: EntryFieldTypes.Symbol;
+  images: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+  description?: EntryFieldTypes.Text;
+  slug: EntryFieldTypes.Text;
+  type: EntryFieldTypes.Text;
+}
+
+interface CategoryEntrySkeleton {
+  fields: CategoryFields;
+  contentTypeId: 'category';
+}
 
 interface CategoryDetailsProps {
   backButtonHref: string;

@@ -1,9 +1,8 @@
 import { ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { getUrlWithSlug, makeUrl } from '@/lib/utils';
-import { Image as ImageType } from '@/types/types';
+import { CategoryType, Image as ImageType } from '@/types/types';
 import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { CategoryType } from '@/hooks/useCategories';
 import ReactImageGallery from 'react-image-gallery';
 
 interface DesktopGalleryProps {

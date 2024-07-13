@@ -32,7 +32,6 @@ export default function MobileGallery({
         setSelectedImage(images[index]);
         setImageParam(images[index].fields.title);
       }}
-      onBeforeSlide={(index) => console.log(index)}
       additionalClass="md:hidden"
       slideDuration={200}
     />

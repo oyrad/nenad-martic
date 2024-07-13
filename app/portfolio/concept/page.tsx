@@ -1,12 +1,12 @@
-import useCategories from '@/hooks/useCategories'
-import Link from 'next/link'
-import Category from '../_components/Category'
-import { makeUrl } from '@/lib/utils'
-import SectionContainer from '@/app/_components/SectionContainer'
-import BackArrow from '@/app/_components/BackArrow'
+import Link from 'next/link';
+import Category from '../_components/Category';
+import { makeUrl } from '@/lib/utils';
+import SectionContainer from '@/app/_components/SectionContainer';
+import BackArrow from '@/app/_components/BackArrow';
+import useConceptCategories from '@/hooks/useConceptCategories';
 
 export default async function Concept() {
-  const categories = await useCategories({ type: 'concept' })
+  const categories = await useConceptCategories();
 
   return (
     <SectionContainer className="pt-4">
@@ -31,5 +31,5 @@ export default async function Concept() {
         ))}
       </div>
     </SectionContainer>
-  )
+  );
 }

@@ -1,11 +1,11 @@
 import Title from '../_components/Title';
 import { makeUrl } from '@/lib/utils';
 import Category from './_components/Category';
-import useCategories from '@/hooks/useCategories';
 import SectionContainer from '../_components/SectionContainer';
+import useDefaultCategories from '@/hooks/useDefaultCategories';
 
 export default async function Categories() {
-  const categories = await useCategories({ type: 'default' });
+  const categories = await useDefaultCategories();
 
   return (
     <SectionContainer>

@@ -1,23 +1,21 @@
 import { client } from '@/contentful';
 import { EntryFieldTypes } from 'contentful';
 
-type ExhibitionFields = {
+interface ExhibitionFields {
   name: EntryFieldTypes.Text;
   year: EntryFieldTypes.Integer;
   description: EntryFieldTypes.Text;
   images: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
   status: EntryFieldTypes.Text;
-};
+}
 
-export type ExhibitionEntrySkeleton = {
+export interface ExhibitionEntrySkeleton {
   fields: ExhibitionFields;
   contentTypeId: 'exhibition';
-};
-
-export type Status = 'upcoming' | 'previous';
+}
 
 interface UseExhibitionsOptions {
-  status: Status;
+  status: 'upcoming' | 'previous';
 }
 
 export default async function useExhibitions(options: UseExhibitionsOptions) {

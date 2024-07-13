@@ -1,5 +1,5 @@
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
-import { Image as ImageType } from '@/types/types';
+import { CategoryType, Image as ImageType } from '@/types/types';
 import {
   getSlug,
   getUrlWithSlug,
@@ -13,7 +13,6 @@ import { X } from '@phosphor-icons/react';
 import { useCallback, useEffect, useState } from 'react';
 import FadeInImage from '@/app/_components/FadeInImage';
 
-import { CategoryType } from '@/hooks/useCategories';
 import NotFound from '@/app/_components/NotFound';
 import MobileGallery from '@/app/portfolio/_components/MobileGallery';
 import DesktopGallery from '@/app/portfolio/_components/DesktopGallery';

@@ -1,12 +1,12 @@
-import useCategories from '@/hooks/useCategories'
-import Link from 'next/link'
-import Category from '../_components/Category'
-import { makeUrl } from '@/lib/utils'
-import SectionContainer from '@/app/_components/SectionContainer'
-import BackArrow from '@/app/_components/BackArrow'
+import Link from 'next/link';
+import Category from '../_components/Category';
+import { makeUrl } from '@/lib/utils';
+import SectionContainer from '@/app/_components/SectionContainer';
+import BackArrow from '@/app/_components/BackArrow';
+import useStorytellingCategories from '@/hooks/useStorytellingCategories';
 
 export default async function Storytelling() {
-  const categories = await useCategories({ type: 'storytelling' })
+  const categories = await useStorytellingCategories();
 
   return (
     <SectionContainer className="pt-4">
@@ -31,5 +31,5 @@ export default async function Storytelling() {
         ))}
       </div>
     </SectionContainer>
-  )
+  );
 }

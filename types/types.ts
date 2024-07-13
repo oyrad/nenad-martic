@@ -12,3 +12,5 @@ export interface Image {
     };
   };
 }
+
+export type CategoryType = 'default' | 'concept' | 'storytelling';

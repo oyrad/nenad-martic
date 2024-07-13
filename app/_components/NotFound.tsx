@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getUrlWithSlug } from '@/lib/utils';
 import BackArrow from '@/app/_components/BackArrow';
-import { CategoryType } from '@/hooks/useCategories';
+import { CategoryType } from '@/types/types';
 
 interface NotFoundProps {
   text: string;
